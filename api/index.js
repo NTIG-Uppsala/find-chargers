@@ -12,11 +12,11 @@ app.use( express.json() )
 app.post('/address/:id', (req, res) => {
 
     const {id} = req.params;
-    const {name} = req.body;
-    const names = `{"${id}": {"address": "${name}", "id": ${id}}}`;
+    const {address} = req.body;
+    const address_data = `{"${id}": {"address": "${address}", "id": ${id}}}`;
 
-    writeToJson(names);
-    return res.send(names);
+    writeToJson(address_data);
+    return res.send(address_data);
 });
 
 app.get('/address/:id', (req, res) => {
@@ -28,16 +28,16 @@ app.get('/address/:id', (req, res) => {
     let data = JSON.parse(rawdata);
 
     try {
-        return res.send(`The name ${data[id].name} are on id ${data[id].id}`); 
+        return res.send(data); 
     } 
     catch {
         return res.send(`No name found on id ${id}`);
     }
 });
 
-async function writeToJson(newAddress) {
+async function writeToJson(new_address) {
     const fs = require('fs');
-    fs.writeFile('address.json', newAddress, (err) => {
+    fs.writeFile('address.json', new_address, (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
     });
