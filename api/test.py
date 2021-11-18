@@ -1,6 +1,4 @@
 import requests
-import json
-
 
 url = 'http://localhost:8080/address/22' #22 is id for request
 address = {'address': 'Kummingatan'}
