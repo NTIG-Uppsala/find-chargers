@@ -7,9 +7,19 @@ let conn = mysql.createConnection({
   database: 'findchargers'
 });
 
+code = "insert_data";
+address_name = "Purjogatan 67";
+
+if (code == "get_data"){
+  sql = "SELECT * FROM charger";
+}
+else if (code == "insert_data"){
+  sql = `INSERT INTO charger(address) VALUES("${address_name}");`;
+}
+
 conn.connect(function(err) {
   if (err) throw err;
-  conn.query("SELECT * FROM charger", function (err, result, fields) {
+  conn.query(sql, function (err, result, fields) {
     if (err) throw err;
     console.log(result);
   });
