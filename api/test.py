@@ -13,4 +13,4 @@ if response_json == {"22": {"address": "Kummingatan", "id": 22}}:
     print("Test was successful")
 
 else:
-    print("Test faild")
+    raise Exception("Test failed")
