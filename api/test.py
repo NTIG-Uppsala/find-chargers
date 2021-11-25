@@ -1,15 +1,14 @@
 import requests
+import json
 
-url = 'http://localhost:8080/address/22' #22 is id for request
-address = {'address': 'Kummingatan'}
-
-response = requests.post(url, json=address)
+url = 'http://localhost:8080/address/59.8402037/17.6504097/100000000'
 
 response = requests.get(url)
 response_json = response.json()
+data = json.load(open("address.json", encoding="utf8"))
 
 print("Response was " + str(response_json))
-if response_json == {"22": {"address": "Kummingatan", "id": 22}}:
+if response_json == data["addresses"]:
     print("Test was successful")
 
 else:
