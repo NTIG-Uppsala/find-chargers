@@ -44,7 +44,7 @@ app.get('/address/:lat/:long/:max_distance', (req, res) => {
     let rawdata = fs.readFileSync('address.json');
     let address_data = JSON.parse(rawdata);
 
-    for (i = 0; i < address_data['addresses'].length; ++i) {     
+    for (i = 0; i < address_data['addresses'].length; i++) {     
         let distance = calculate_distance(address_data['addresses'][i].coordinates, [lat, long]);
         if (distance < max_distance){
             list_to_send.push(address_data['addresses'][i]);
