@@ -3,14 +3,16 @@
 - Windows 10 Education
 - [GitBash 2.33.0 64-bit]
 - Visual Studio Code - (Version 1.59.1)
+- Insomnia v2021.6.0
+- Microsoft Azure
 
 ***
 
 ## Programming Languages & Frameworks
 
 ### Programming Languages:
--  Python3
-
+- Python3
+- Node.js 14+
 ***
 
 ## Coding Standard 
