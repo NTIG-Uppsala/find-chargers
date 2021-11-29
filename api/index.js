@@ -9,6 +9,8 @@ app.listen(
     () => console.log(`API started local on port ${PORT}`)
 )
 
+app.use( express.json() )
+
 // post function for rest api that appends new charger
 app.post('/address/:id', (req, res) => {
     const {id} = req.params;
