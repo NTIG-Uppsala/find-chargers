@@ -3,19 +3,20 @@ const app = express();
 const PORT = 8080;
 const fs = require('fs');
 
+// listen for api calls
 app.listen(
     PORT,
     () => console.log(`API started local on port ${PORT}`)
 )
 
-app.use( express.json() )
-
+// post function for rest api that appends new charger
 app.post('/address/:id', (req, res) => {
     const {id} = req.params;
     const {address} = req.body;
     const {coordinates} = req.body;
     let rawdata = fs.readFileSync('address.json');
     let address_data = JSON.parse(rawdata);
+    // return true if id is already used
     let in_json = address_data.addresses.map(in_json => {
         if (in_json.id == id) {
             return true;
@@ -23,17 +24,19 @@ app.post('/address/:id', (req, res) => {
     });
     if (in_json.includes(true)) {
         return res.send('id is already in use');
-        
     }
+    // formating of data before appending new data
     address_data['addresses'].push({
         'id': id,
         'address': address,
         'coordinates': coordinates
     });
+    // write to data file
     writeToJson(JSON.stringify(address_data));
     return res.send('Data successfully saved');
 });
 
+// find all chargers in range of position
 app.get('/address/:lat/:long/:max_distance', (req, res) => {
 
     const {lat} = req.params;
@@ -43,7 +46,7 @@ app.get('/address/:lat/:long/:max_distance', (req, res) => {
 
     let rawdata = fs.readFileSync('address.json');
     let address_data = JSON.parse(rawdata);
-
+    // filter chargers in range
     for (i = 0; i < address_data['addresses'].length; i++) {     
         let distance = calculate_distance(address_data['addresses'][i].coordinates, [lat, long]);
         if (distance < max_distance){
@@ -61,6 +64,7 @@ async function writeToJson(new_address) {
     });
 }
 
+// calculates distance between two coordinate points(returns in meters)
 function calculate_distance(cords1, cords2) {
     const calculate = require('calculate-coordinates');
     let result = calculate.fromCoordinatesReturningM(cords1, cords2);
