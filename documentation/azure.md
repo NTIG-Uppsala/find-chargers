@@ -19,4 +19,5 @@ Press the new Azure logo in the vs code sidebar and then log in to your microsof
 
 You can find the uploaded files in the Files tab under the project name in App Service. 
 
-To upload files press the "Deploy to web app" cloud icon in the Azure extension on the App Service tab. 
+To manually upload files press the "Deploy to web app" cloud icon in the Azure extension on the App Service tab. 
+There is also a github workflow that automatically uploads to azure when there is a push to main.
