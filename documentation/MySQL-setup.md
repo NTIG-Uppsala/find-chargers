@@ -12,10 +12,10 @@ To set up a SQL database, perform the following steps:
     - CREATE DATABASE findchargers;
     - Use findchargers;
     - CREATE TABLE charger(
-        - id INTEGER NOT NULL UNIQUE PRIMARY KEY,
+        - id INTEGER NOT NULL UNIQUE PRIMARY KEY AUTO,
         - address VARCHAR(100) NOT NULL,
-        - coordinate_long float,
         - coordinate_lat float,
+        - coordinate_long float,
         - email_address VARCHAR(100) NOT NULL,
         - ac_1 BOOL,
         - ac_2 BOOL,
@@ -31,4 +31,4 @@ Copy them and edit the connection you created in step 2 and input servername int
 Testing this connection should return successfully but we are still not done.
     - ![Azure overview](images/MySQL-setup-3.JPG)
 
-6. 
+6. Go to server parameters in the Azure database, search for require_secure_transport and switch it off.
