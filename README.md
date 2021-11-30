@@ -6,3 +6,5 @@ This is a repository for an app that finds chargers for electrical cars.
 #### [Definition of done](documentation/definition-of-done.md)
 
 #### [Azure documentation](documentation/azure.md)
+
+#### [MySQL setup](documentation/MySQL-setup.md)
