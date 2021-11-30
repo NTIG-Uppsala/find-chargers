@@ -12,7 +12,7 @@ To set up a SQL database, perform the following steps:
     - CREATE DATABASE findchargers;
     - Use findchargers;
     - CREATE TABLE charger(
-        - id INTEGER NOT NULL UNIQUE PRIMARY KEY AUTO,
+        - id INTEGER NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
         - address VARCHAR(100) NOT NULL,
         - coordinate_lat float,
         - coordinate_long float,
