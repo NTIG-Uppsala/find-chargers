@@ -16,12 +16,17 @@ To set up a SQL database, perform the following steps:
         - address VARCHAR(100) NOT NULL,
         - coordinate_lat float,
         - coordinate_long float,
-        - email_address VARCHAR(100) NOT NULL,
         - ac_1 BOOL,
         - ac_2 BOOL,
         - chademo BOOL,
         - ccs BOOL,
         - user_input VARCHAR(300)
+    - );
+
+    - CREATE TABLE email(
+        - id INTEGER UNIQUE NOT NULL AUTO_INCREMENT,
+        - email_address VARCHAR(100) NOT NULL,
+        - FOREIGN KEY(id) REFERENCES charger(id)
     - );
 
 4. Now you will need to create an Azure database to host the MySQL database. That process is detailed in [Azure.md](Azure.md).
