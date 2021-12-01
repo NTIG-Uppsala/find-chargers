@@ -65,7 +65,7 @@ app.post('/post-charger', (req, res) => {
             "${body.user_input}");
     INSERT INTO email(
         email_address)
-        VALUES("${body.email_address}")`;
+        VALUES("${body.email_address}");`;
             
     conn.query(sql, function (err, result) {
         if (err) throw err;
