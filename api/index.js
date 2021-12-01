@@ -49,7 +49,6 @@ app.post('/post-charger', (req, res) => {
         address, 
         coordinate_lat, 
         coordinate_long, 
-        email_address, 
         ac_1, 
         ac_2, 
         chademo, 
@@ -59,12 +58,14 @@ app.post('/post-charger', (req, res) => {
             "${body.address_name}", 
             ${body.coordinate_lat}, 
             ${body.coordinate_long}, 
-            "${body.email_address}", 
             ${body.ac_1}, 
             ${body.ac_2}, 
             ${body.chademo}, 
             ${body.ccs}, 
-            "${body.user_input}");`;
+            "${body.user_input}");
+    INSERT INTO email(
+        email_address)
+        VALUES("${body.email_address}")`;
             
     conn.query(sql, function (err, result) {
         if (err) throw err;
@@ -75,7 +76,7 @@ app.post('/post-charger', (req, res) => {
 
 // gets all charges in the database
 app.get('/get-charger', (req, res) => {
-    let sql = 'SELECT * FROM charger';
+    let sql = 'SELECT * FROM charger; SELECT email_address FROM email;';
     conn.query(sql, function (err, result) {
         if (err) throw err;
         return res.send(result);
