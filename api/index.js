@@ -80,12 +80,12 @@ app.post('/post-charger', (req, res) => {
 
 // gets all charges in the database
 app.get('/get-charger', (req, res) => {
-    let sql = 'SELECT * FROM charger; SELECT email_address FROM email;';
-conn.query(sql, function (err, result) {
-    if (err) throw err;
-    return res.send(result);
-    });  
-})
+    let sql = 'SELECT * FROM charger LEFT OUTER JOIN email ON charger.id = email.id;';
+    conn.query(sql, function (err, result) {
+            if (err) throw err;
+            return res.send(result);
+        });
+});
 
 // calculates distance between two coordinate points(returns in meters)
 function calculate_distance(cords1, cords2) {
