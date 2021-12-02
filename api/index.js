@@ -108,10 +108,21 @@ app.post('/delete-charger-by-id/:id/:email', (req, res) => {
     let sql2 = `DELETE FROM charger WHERE id = ${id};`
     conn.query(sql1, function (err, result) {
         if (err) throw err;
-        conn.query(sql2, function (err, result) {
-            if (err) throw err;
-            return res.send('Deletion successful');
-        });
+        for (i = 0; i < result.length; i++) { 
+            if (result[i].id == id){
+                id_exist = true
+                break
+            }
+        }
+        if (id_exist) {
+            conn.query(sql2, function (err, result) {
+                if (err) throw err;
+                return res.send('Deletion successful');
+            });
+        }
+        else {
+            return res.send('Id not connected to email');
+        }
     });
 });
 
