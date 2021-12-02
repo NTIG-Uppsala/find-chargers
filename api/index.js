@@ -73,7 +73,7 @@ app.post('/post-charger', (req, res) => {
         conn.query(sql_2, function (err, result) {
             if (err) throw err;
             return res.send(body);
-        });;
+        });
     });
     
 });
@@ -82,9 +82,37 @@ app.post('/post-charger', (req, res) => {
 app.get('/get-charger', (req, res) => {
     let sql = 'SELECT * FROM charger LEFT OUTER JOIN email ON charger.id = email.id;';
     conn.query(sql, function (err, result) {
+        if (err) throw err;
+        return res.send(result);
+    });
+});
+
+app.get('/get-charger-by-email/:email', (req, res) => {
+    const {email} = req.params;
+    let sql = `SELECT * FROM charger WHERE id IN (
+            SELECT id FROM email WHERE email_address = "${email}"
+            );`;
+    conn.query(sql, function (err, result) {
+        if (err) throw err;
+        return res.send(result);
+    });
+});
+
+app.post('/delete-charger-by-id/:id/:email', (req, res) => {
+    const {id} = req.params;
+    const {email} = req.params;
+    let id_exist = false
+    let sql1 = `SELECT * FROM charger WHERE id IN (
+        SELECT id FROM email WHERE email_address = "${email}"
+        );`;
+    let sql2 = `DELETE FROM charger WHERE id = ${id};`
+    conn.query(sql1, function (err, result) {
+        if (err) throw err;
+        conn.query(sql2, function (err, result) {
             if (err) throw err;
-            return res.send(result);
+            return res.send('Deletion successful');
         });
+    });
 });
 
 // calculates distance between two coordinate points(returns in meters)
