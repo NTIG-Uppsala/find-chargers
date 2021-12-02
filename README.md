@@ -8,3 +8,5 @@ This is a repository for an app that finds chargers for electrical cars.
 #### [Azure documentation](documentation/azure.md)
 
 #### [MySQL setup](documentation/MySQL-setup.md)
+
+#### [API documentation](documentation/api.md)
