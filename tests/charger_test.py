@@ -3,7 +3,7 @@ import json
 
 from requests.api import get
 
-url = "http://localhost:8080/"
+url = "https://find-chargers.azurewebsites.net/"
 data = {
     "address": "Testgatan 64",
     "coordinate_lat": 30.5,
