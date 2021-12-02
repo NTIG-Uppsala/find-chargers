@@ -26,7 +26,7 @@ To set up a SQL database, perform the following steps:
     - CREATE TABLE email(
         - id INTEGER UNIQUE NOT NULL AUTO_INCREMENT,
         - email_address VARCHAR(100) NOT NULL,
-        - FOREIGN KEY(id) REFERENCES charger(id)
+        - FOREIGN KEY(id) REFERENCES charger(id) ON DELETE CASCADE
     - );
 
 4. Now you will need to create an Azure database to host the MySQL database. That process is detailed in [Azure.md](Azure.md).
