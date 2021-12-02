@@ -45,7 +45,7 @@ app.get('/get-chargers-in-range/:lat/:long/:max_distance', (req, res) => {
 // adds data to the database by sending it in json format
 app.post('/post-charger', (req, res) => {
     const {body} = req;
-    let sql = `INSERT INTO charger(
+    let sql_1 = `INSERT INTO charger(
         address, 
         coordinate_lat, 
         coordinate_long, 
@@ -55,21 +55,25 @@ app.post('/post-charger', (req, res) => {
         ccs, 
         user_input) 
         VALUES(
-            "${body.address_name}", 
+            "${body.address}", 
             ${body.coordinate_lat}, 
             ${body.coordinate_long}, 
             ${body.ac_1}, 
             ${body.ac_2}, 
             ${body.chademo}, 
             ${body.ccs}, 
-            "${body.user_input}");
-    INSERT INTO email(
+            "${body.user_input}");`
+
+    let sql_2 = `INSERT INTO email(
         email_address)
         VALUES("${body.email_address}");`;
             
-    conn.query(sql, function (err, result) {
+    conn.query(sql_1, function (err, result) {
         if (err) throw err;
-        return res.send(body);
+        conn.query(sql_2, function (err, result) {
+            if (err) throw err;
+            return res.send(body);
+        });;
     });
     
 });
@@ -77,9 +81,9 @@ app.post('/post-charger', (req, res) => {
 // gets all charges in the database
 app.get('/get-charger', (req, res) => {
     let sql = 'SELECT * FROM charger; SELECT email_address FROM email;';
-    conn.query(sql, function (err, result) {
-        if (err) throw err;
-        return res.send(result);
+conn.query(sql, function (err, result) {
+    if (err) throw err;
+    return res.send(result);
     });  
 })
 
