@@ -67,12 +67,13 @@ app.post('/post-charger', (req, res) => {
     let sql_2 = `INSERT INTO email(
         email_address)
         VALUES("${body.email_address}");`;
-            
+
     conn.query(sql_1, function (err, result) {
         if (err) throw err;
         conn.query(sql_2, function (err, result) {
             if (err) throw err;
-            return res.send(body);
+
+            return res.send(result);
         });
     });
     
@@ -98,7 +99,7 @@ app.get('/get-charger-by-email/:email', (req, res) => {
     });
 });
 
-app.post('/delete-charger-by-id/:id/:email', (req, res) => {
+app.delete('/delete-charger-by-id/:id/:email', (req, res) => {
     const {id} = req.params;
     const {email} = req.params;
     let id_exist = false
@@ -125,6 +126,35 @@ app.post('/delete-charger-by-id/:id/:email', (req, res) => {
         }
     });
 });
+
+app.put('/change-charger-visibility/:id/:email', (req, res) => {
+    const {id} = req.params;
+    const {email} = req.params;
+    let id_exist = false
+    let sql1 = `SELECT * FROM charger WHERE id IN (
+        SELECT id FROM email WHERE email_address = "${email}"
+        );`;
+    let sql2 = // sql code to update visibility
+    conn.query(sql1, function (err, result) {
+        if (err) throw err;
+        for (i = 0; i < result.length; i++) { 
+            if (result[i].id == id){
+                id_exist = true
+                break
+            }
+        }
+        if (id_exist) {
+            conn.query(sql2, function (err, result) {
+                if (err) throw err;
+                return res.send('Activity status successfully updated');
+            });
+        }
+        else {
+            return res.send('Id not connected to email');
+        }
+    });
+});
+
 
 // calculates distance between two coordinate points(returns in meters)
 function calculate_distance(cords1, cords2) {
