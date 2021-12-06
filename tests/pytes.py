@@ -68,3 +68,24 @@ def test_new_charger_can_be_found():
         pass
     else:
         raise Exception("Failed")
+def test_new_charger_can_be_found():
+    data = {
+    "address": "Testgatan 66",
+    "coordinate_lat": 32.5,
+    "coordinate_long": 22,
+    "ac_1": 0,
+    "ac_2": 0,
+    "chademo": 1,
+    "ccs": 1,
+    "user_input": "Testing",
+    "email_address": "test@test.com"
+    }
+    request_anwser = requests.post("https://find-chargers.azurewebsites.net/post-charger", json=data).json()
+    requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/"+str(request_anwser["insertId"])+"/0/test@test.com")
+    request_anwser2 = requests.get("https://find-chargers.azurewebsites.net/get-charger-by-email/test@test.com").json()
+    for i in range(0, len(request_anwser2)):
+        if request_anwser2[i]["id"] == request_anwser["insertId"]:
+            pass
+            return
+    
+    raise Exception("Failed")
