@@ -68,7 +68,7 @@ def test_new_charger_can_be_found():
         pass
     else:
         raise Exception("Failed")
-def test_new_charger_can_be_found():
+def test_inactive_found_by_mail():
     data = {
     "address": "Testgatan 66",
     "coordinate_lat": 32.5,
@@ -89,3 +89,9 @@ def test_new_charger_can_be_found():
             return
     
     raise Exception("Failed")
+def test_send_hamsterpaj():
+    request_anwser = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/20/HAMSTERPAJ/test@test.com")
+    if request_anwser == "Use 1 or 0 to activate/inactivate":
+        pass
+    else:
+        raise Exception("Failed")
