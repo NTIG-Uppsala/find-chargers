@@ -8,6 +8,12 @@ class TestClass:
             pass
         else:
             raise Exception("Failed")
+    def non_existing_charger_inactive(self):
+        request_anwser = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/1/0/test@test.com")
+        if request_anwser == "Charger dose not exist":
+            pass
+        else:
+            raise Exception("Failed")
     def charger_inactive(self):
         request_anwser = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/20/0/test@test.com")
         if request_anwser == "Charger changed to inactive":
@@ -38,7 +44,7 @@ class TestClass:
             pass
         else:
             raise Exception("Failed")
-    def charger_active(self):
+    def incorrect_email(self):
         request_anwser = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/20/1/test2 @test.com")
         if request_anwser == "Email or id is incorrect":
             pass
