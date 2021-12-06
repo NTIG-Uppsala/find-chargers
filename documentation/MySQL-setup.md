@@ -2,7 +2,10 @@
 
 To set up a SQL database, perform the following steps:
 
-1. Download MySQL workbench (Put more things here)
+1. Download MySQL workbench 8.0.27. To do so, go to the MySQL devs' website, click download now, choose the os you are using,  
+make sure the version is 8.0.27 (This might be irrelevant due to future updates. Just choose the latest version) and click download.  
+Now choose the "just download" option and then just click next until the program installs.
+    - ![MySQL download](images/MySQL-setup-1.JPG)
 
 2. Open MySQL workbench and create a new connection.
     - ![MySQL workbench home](images/MySQL-setup-2.JPG)
