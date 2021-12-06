@@ -26,8 +26,14 @@ class TestClass:
             pass
         else:
             raise Exception("Charger not found")
-    def search_for_active(self):
+    def send_minus1(self):
         request_anwser = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/20/-1/test@test.com")
+        if request_anwser == "Use 1 or 0 to activate/inactivate":
+            pass
+        else:
+            raise Exception("Failed")
+    def send_2(self):
+        request_anwser = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/20/2/test@test.com")
         if request_anwser == "Use 1 or 0 to activate/inactivate":
             pass
         else:
