@@ -38,3 +38,9 @@ class TestClass:
             pass
         else:
             raise Exception("Failed")
+    def charger_active(self):
+        request_anwser = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/20/1/test2 @test.com")
+        if request_anwser == "Email or id is incorrect":
+            pass
+        else:
+            raise Exception("Failed")
