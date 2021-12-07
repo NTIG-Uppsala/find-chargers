@@ -90,8 +90,7 @@ app.post('/post-charger', [
         email_address)
         VALUES(?);`;
     
-    var inserts_2 = [body.email_address];
-    sql2 = mysql.format(sql2, inserts2);
+    sql2 = mysql.format(sql2, body.email_address);
 
     try{ 
         conn.query(sql1, function (err, result) {
@@ -150,9 +149,11 @@ app.get('/get-charger-by-email/:email', [
     }
 });
 
+
+
 app.delete('/delete-charger-by-id/:id/:email',[
     check('email', "Must be a valid email!").isEmail().normalizeEmail(),
-    check('id', "Must be a number!").isNumeric().trim()
+    check('id', "Must be a number!").isNumeric()
   ],
    (req, res) => {
     const errors = validationResult(req);
@@ -162,10 +163,7 @@ app.delete('/delete-charger-by-id/:id/:email',[
     const id = req.params.id;
     const email = req.params.email;
     let id_exist = false
-    let sql1 = `SELECT * FROM charger WHERE id IN (
-        SELECT id FROM email WHERE email_address = ?);`;
-    var inserts1 = [email];
-    sql1 = mysql.format(sql1, inserts1);
+    sql1 = mysql.format('SELECT * FROM charger WHERE id IN (SELECT id FROM email WHERE email_address = ?);', email);
 
     let sql2 = `DELETE FROM charger WHERE id = ?;`
     var inserts2 = [id];
@@ -217,14 +215,14 @@ app.put('/change-charger-visibility/:id/:is_visible/:email', [
 
     let sql2 = `UPDATE charger SET is_visible = ? WHERE id = ?`;
 
-    var inserts2 = [is_visible, id];
-    sql2 = mysql.format(sql2, inserts2);
+    sql2 = mysql.format(sql2, [is_visible, id]);
     try{
         conn.query(sql1, function (err, result) {
             if (err) throw err;
             for (i = 0; i < result.length; i++) { 
                 if (result[i].id == id){
                     id_exist = true
+                    console.log("exists");
                     visibility_status = result[i]['is_visible'];
                     break
                 }
@@ -233,13 +231,18 @@ app.put('/change-charger-visibility/:id/:is_visible/:email', [
                 if (visibility_status != is_visible) {
                     conn.query(sql2, function (err) {
                         if (err) throw err;
-                        if (is_visible == "true") {
+                        if (is_visible) {
+                            console.log("true");
                             return res.send('Charger changed to active');
                         }
                         else {
+                            console.log("false");
                             return res.send('Charger changed to inactive');
                         }
                     });
+                }
+                else {
+                    return res.send('Visibility already set to ' + is_visible);
                 }
             }
             else {
