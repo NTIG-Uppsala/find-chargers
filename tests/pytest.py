@@ -4,13 +4,13 @@ import requests
 
 def test_non_existing_charger_active():
     request_anwser = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/1/1/test@test.com")
-    if request_anwser == "Charger dose not exist":
+    if request_anwser == "Email or id is incorrect":
         pass
     else:
         raise Exception("Failed")
 def test_non_existing_charger_inactive():
     request_anwser = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/1/0/test@test.com")
-    if request_anwser == "Charger dose not exist":
+    if request_anwser == "Email or id is incorrect":
         pass
     else:
         raise Exception("Failed")
