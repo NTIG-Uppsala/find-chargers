@@ -118,7 +118,7 @@ app.get('/get-charger-by-email/:email', (req, res) => {
     }
 });
 
-app.post('/delete-charger-by-id/:id/:email', (req, res) => {
+app.delete('/delete-charger-by-id/:id/:email', (req, res) => {
     const {id} = req.params;
     const {email} = req.params;
     let id_exist = false
@@ -150,6 +150,49 @@ app.post('/delete-charger-by-id/:id/:email', (req, res) => {
         console.error(err);
     }
 });
+
+app.put('/change-charger-visibility/:id/:is_visible/:email', (req, res) => {
+    const {id} = req.params;
+    const {is_visible} = req.params;
+    const {email} = req.params;
+    let id_exist = false
+    let sql1 = `SELECT * FROM charger WHERE id IN (
+        SELECT id FROM email WHERE email_address = "${email}"
+        );`;
+    let sql2 = `UPDATE charger SET is_visible = ${is_visible} WHERE id = ${id}`
+    if (is_visible == 1 || is_visible == 0) {
+        conn.query(sql1, function (err, result) {
+            if (err) throw err;
+            for (i = 0; i < result.length; i++) { 
+                if (result[i].id == id){
+                    id_exist = true
+                    const visibility_status = result[i]['is_visible'];
+                    break
+                }
+            }
+            if (id_exist) {
+                if (visibility_status != is_visible) {
+                    conn.query(sql2, function (err) {
+                        if (err) throw err;
+                        if (is_visible == 0) {
+                            return res.send('Charger changed to inactive')
+                        }
+                        else {
+                            return res.send('Charger changed to active')
+                        }
+                    });
+                }
+            }
+            else {
+                return res.send('Email or id is incorrect');
+            }
+        });
+    }
+    else {
+        return res.send('Use 1 or 0 to activate/inactivate')
+    }
+});
+
 
 // calculates distance between two coordinate points(returns in meters)
 function calculate_distance(cords1, cords2) {

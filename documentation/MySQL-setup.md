@@ -23,7 +23,8 @@ Now choose the "just download" option and then just click next until the program
         - ac_2 BOOL,
         - chademo BOOL,
         - ccs BOOL,
-        - user_input VARCHAR(300)
+        - user_input VARCHAR(300),
+        - is_visible BOOL DEFAULT TRUE
     - );
 
     - CREATE TABLE email(
