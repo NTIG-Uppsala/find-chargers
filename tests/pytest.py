@@ -95,3 +95,9 @@ def test_send_hamsterpaj():
         pass
     else:
         raise Exception("Failed")
+def test_send_wierd_charger_id():
+    request_anwser = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/**''**//--/\\\??##!#¤%&/()=?**/1/test@test.com")
+    if request_anwser == "Use 1 or 0 to activate/inactivate":
+        pass
+    else:
+        raise Exception("Failed")
