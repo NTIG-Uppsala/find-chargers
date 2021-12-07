@@ -29,17 +29,22 @@ app.get('/get-chargers-in-range/:lat/:long/:max_distance', (req, res) => {
     const list_to_send = [];
     let sql = 'SELECT * FROM charger';
 
-    conn.query(sql, function (err, result) {
-        if (err) throw err;
-        // filter chargers in range
-        for (i = 0; i < result.length; i++) {     
-            let distance = calculate_distance([result[i].coordinate_lat, result[i].coordinate_long], [lat, long]);
-            if (distance < max_distance){
-                list_to_send.push(result[i]);
+    try{    
+        conn.query(sql, function (err, result) {
+            if (err) throw err;
+            // filter chargers in range
+            for (i = 0; i < result.length; i++) {     
+                let distance = calculate_distance([result[i].coordinate_lat, result[i].coordinate_long], [lat, long]);
+                if (distance < max_distance){
+                    list_to_send.push(result[i]);
+                }
             }
-        }
-        return res.send(list_to_send);
-    });
+            return res.send(list_to_send);
+        });
+    }
+    catch(err){
+        console.error(err);
+    }
 });
 
 // adds data to the database by sending it in json format
@@ -67,24 +72,34 @@ app.post('/post-charger', (req, res) => {
     let sql_2 = `INSERT INTO email(
         email_address)
         VALUES("${body.email_address}");`;
-            
-    conn.query(sql_1, function (err, result) {
-        if (err) throw err;
-        conn.query(sql_2, function (err, result) {
+
+    try{ 
+        conn.query(sql_1, function (err, result) {
             if (err) throw err;
-            return res.send(body);
+            conn.query(sql_2, function (err, result) {
+                if (err) throw err;
+                return res.send(body);
+            });
         });
-    });
+    }
+    catch(err){
+        console.error(err);
+    }
     
 });
 
 // gets all charges in the database
 app.get('/get-charger', (req, res) => {
     let sql = 'SELECT * FROM charger LEFT OUTER JOIN email ON charger.id = email.id;';
-    conn.query(sql, function (err, result) {
-        if (err) throw err;
-        return res.send(result);
-    });
+    try{ 
+        conn.query(sql, function (err, result) {
+            if (err) throw err;
+            return res.send(result);
+        });
+    }
+    catch(err){
+        console.error(err);
+    }
 });
 
 app.get('/get-charger-by-email/:email', (req, res) => {
@@ -92,10 +107,15 @@ app.get('/get-charger-by-email/:email', (req, res) => {
     let sql = `SELECT * FROM charger WHERE id IN (
             SELECT id FROM email WHERE email_address = "${email}"
             );`;
-    conn.query(sql, function (err, result) {
-        if (err) throw err;
-        return res.send(result);
-    });
+    try{ 
+        conn.query(sql, function (err, result) {
+            if (err) throw err;
+            return res.send(result);
+        });
+    }
+    catch(err){
+        console.error(err);
+    }
 });
 
 app.post('/delete-charger-by-id/:id/:email', (req, res) => {
@@ -106,24 +126,29 @@ app.post('/delete-charger-by-id/:id/:email', (req, res) => {
         SELECT id FROM email WHERE email_address = "${email}"
         );`;
     let sql2 = `DELETE FROM charger WHERE id = ${id};`
-    conn.query(sql1, function (err, result) {
-        if (err) throw err;
-        for (i = 0; i < result.length; i++) { 
-            if (result[i].id == id){
-                id_exist = true
-                break
+    try{ 
+        conn.query(sql1, function (err, result) {
+            if (err) throw err;
+            for (i = 0; i < result.length; i++) { 
+                if (result[i].id == id){
+                    id_exist = true
+                    break
+                }
             }
-        }
-        if (id_exist) {
-            conn.query(sql2, function (err, result) {
-                if (err) throw err;
-                return res.send('Deletion successful');
-            });
-        }
-        else {
-            return res.send('Id not connected to email');
-        }
-    });
+            if (id_exist) {
+                conn.query(sql2, function (err, result) {
+                    if (err) throw err;
+                    return res.send('Deletion successful');
+                });
+            }
+            else {
+                return res.send('Id not connected to email');
+            }
+        });
+    }
+    catch(err){
+        console.error(err);
+    }
 });
 
 // calculates distance between two coordinate points(returns in meters)
