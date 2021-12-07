@@ -30,14 +30,17 @@ def test_non_existing_charger_inactive():
     else:
         raise Exception(request_answer)
 def test_charger_inactive():
-    request_answer = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/20/0/test@test.com")
+    charger_id = post_request()
+    request_answer = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/" + str(charger_id) + "/0/test@test.com")
     if request_answer.text == "Charger changed to inactive":
         pass
     else:
         raise Exception(request_answer)
 def test_charger_active():
-    request_answer = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/20/1/test@test.com")
-    if request_answer == "Charger changed to active":
+    charger_id = post_request()
+    request_answer = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/" + str(charger_id) + "/0/test@test.com")
+    request_answer = requests.put("https://find-chargers.azurewebsites.net/change-charger-visibility/" + str(charger_id) + "/1/test@test.com")
+    if request_answer.text == "Charger changed to active":
         pass
     else:
         raise Exception(request_answer)
