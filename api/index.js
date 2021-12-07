@@ -127,14 +127,15 @@ app.delete('/delete-charger-by-id/:id/:email', (req, res) => {
     });
 });
 
-app.put('/change-charger-visibility/:id/:email', (req, res) => {
+app.put('/change-charger-visibility/:id/:visible/:email', (req, res) => {
     const {id} = req.params;
+    const {hidden} = req.params;
     const {email} = req.params;
     let id_exist = false
     let sql1 = `SELECT * FROM charger WHERE id IN (
         SELECT id FROM email WHERE email_address = "${email}"
         );`;
-    let sql2 = // sql code to update visibility
+    let sql2 = 
     conn.query(sql1, function (err, result) {
         if (err) throw err;
         for (i = 0; i < result.length; i++) { 
