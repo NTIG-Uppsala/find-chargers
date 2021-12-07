@@ -24,9 +24,9 @@ app.use( express.json() )
 
 // find all chargers in range of position
 app.get('/get-chargers-in-range/:lat/:long/:max_distance',[
-    check('lat').isNumeric().trim().escape(),
-    check('long').isNumeric().trim().escape(),
-    check('max_distance').isNumeric().trim().escape()
+    check('lat', "Must be a number!").isNumeric(),
+    check('long', "Must be a number!").isNumeric(),
+    check('max_distance', "Must be a number!").isNumeric()
   ],
    (req, res) => {
     const lat = req.params.lat;
@@ -56,14 +56,13 @@ app.get('/get-chargers-in-range/:lat/:long/:max_distance',[
 // adds data to the database by sending it in json format
 app.post('/post-charger', [ 
     body('email_address', "Must be a valid email!").isEmail().normalizeEmail(),
-    body('address', "Must not be empty!").not().isEmpty().escape(),
-    body('coordinate_lat', "Must be a number!").isNumeric().trim().escape(),
-    body('coordinate_long', "Must be a number!").isNumeric().trim().escape(),
-    body('ac_1').toBoolean().escape(), //gör en string som är "true" eller "false". Inte en faktisk bool!
-    body('ac_2').toBoolean().escape(),
-    body('chademo').toBoolean().escape(),
-    body('ccs').toBoolean().escape(),
-    body('user_input').escape()
+    body('address', "Must not be empty!").not().isEmpty(),
+    body('coordinate_lat', "Must be a number!").isNumeric(),
+    body('coordinate_long', "Must be a number!").isNumeric(),
+    body('ac_1').toBoolean(), //gör en string som är "true" eller "false". Inte en faktisk bool!
+    body('ac_2').toBoolean(),
+    body('chademo').toBoolean(),
+    body('ccs').toBoolean()
 
  ],
   (req, res) => {
@@ -72,7 +71,7 @@ app.post('/post-charger', [
         return res.status(400).json({ errors: errors.array() });
     }
     const {body} = req;
-    let sql_1 = `INSERT INTO charger(
+    let sql1 = `INSERT INTO charger(
         address, 
         coordinate_lat, 
         coordinate_long, 
@@ -81,24 +80,23 @@ app.post('/post-charger', [
         chademo, 
         ccs, 
         user_input) 
-        VALUES(
-            "${body.address}", 
-            ${body.coordinate_lat}, 
-            ${body.coordinate_long}, 
-            ${body.ac_1}, 
-            ${body.ac_2}, 
-            ${body.chademo}, 
-            ${body.ccs}, 
-            "${body.user_input}");`
+        VALUES(?, ?, ?, ?, ?, ?, ?, ?);`
 
-    let sql_2 = `INSERT INTO email(
+    var inserts1 = [body.address, body.coordinate_lat, body.coordinate_long, body.ac_1, body.ac_2, body.chademo, body.ccs, body.user_input];
+    sql1 = mysql.format(sql1, inserts1);
+
+
+    let sql2 = `INSERT INTO email(
         email_address)
-        VALUES("${body.email_address}");`;
+        VALUES(?);`;
+    
+    var inserts_2 = [body.email_address];
+    sql2 = mysql.format(sql2, inserts2);
 
     try{ 
-        conn.query(sql_1, function (err, result) {
+        conn.query(sql1, function (err, result) {
             if (err) throw err;
-            conn.query(sql_2, function (err, result) {
+            conn.query(sql2, function (err, result) {
                 if (err) throw err;
                 return res.send(result);
             });
@@ -112,7 +110,9 @@ app.post('/post-charger', [
 
 // gets all charges in the database
 app.get('/get-charger', (req, res) => {
-    let sql = 'SELECT * FROM charger LEFT OUTER JOIN email ON charger.id = email.id;';
+    let sql = "SELECT * FROM ?? LEFT OUTER JOIN ?? ON ?? = ??";
+    var inserts = ['charger', 'email', 'charger.id', 'email.id'];
+    sql = mysql.format(sql, inserts);
     try{ 
         conn.query(sql, function (err, result) {
             if (err) throw err;
@@ -132,10 +132,13 @@ app.get('/get-charger-by-email/:email', [
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    
     const email = req.params.email;
     let sql = `SELECT * FROM charger WHERE id IN (
-            SELECT id FROM email WHERE email_address = "${email}"
+            SELECT id FROM email WHERE email_address = ?
             );`;
+    var inserts = [email];
+    sql = mysql.format(sql, inserts);
     try{ 
         conn.query(sql, function (err, result) {
             if (err) throw err;
@@ -149,7 +152,7 @@ app.get('/get-charger-by-email/:email', [
 
 app.delete('/delete-charger-by-id/:id/:email',[
     check('email', "Must be a valid email!").isEmail().normalizeEmail(),
-    check('id', "Must be a number!").isNumeric().trim().escape()
+    check('id', "Must be a number!").isNumeric().trim()
   ],
    (req, res) => {
     const errors = validationResult(req);
@@ -160,9 +163,13 @@ app.delete('/delete-charger-by-id/:id/:email',[
     const email = req.params.email;
     let id_exist = false
     let sql1 = `SELECT * FROM charger WHERE id IN (
-        SELECT id FROM email WHERE email_address = "${email}"
-        );`;
-    let sql2 = `DELETE FROM charger WHERE id = ${id};`
+        SELECT id FROM email WHERE email_address = ?);`;
+    var inserts1 = [email];
+    sql1 = mysql.format(sql1, inserts1);
+
+    let sql2 = `DELETE FROM charger WHERE id = ?;`
+    var inserts2 = [id];
+    sql2 = mysql.format(sql2, inserts2);
     try{ 
         conn.query(sql1, function (err, result) {
             if (err) throw err;
@@ -190,8 +197,8 @@ app.delete('/delete-charger-by-id/:id/:email',[
 
 app.put('/change-charger-visibility/:id/:is_visible/:email', [
     check('email', "Must be a valid email!").isEmail().normalizeEmail(),
-    check('id', "Must be a number!").isNumeric().trim().escape(),
-    check('is_visible').toBoolean().escape() //gör en string som är "true" eller "false". Inte en faktisk bool!
+    check('id', "Must be a number!").isNumeric(),
+    check('is_visible').toBoolean() //gör en string som är "true" eller "false". Inte en faktisk bool!
   ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -203,9 +210,15 @@ app.put('/change-charger-visibility/:id/:is_visible/:email', [
     let visibility_status;
     let id_exist = false;
     let sql1 = `SELECT * FROM charger WHERE id IN (
-        SELECT id FROM email WHERE email_address = "${email}"
-        );`;
-    let sql2 = `UPDATE charger SET is_visible = ${is_visible} WHERE id = ${id}`;
+        SELECT id FROM email WHERE email_address = ?);`;
+    var inserts1 = [email];
+    sql1 = mysql.format(sql1, inserts1);
+
+
+    let sql2 = `UPDATE charger SET is_visible = ? WHERE id = ?`;
+
+    var inserts2 = [is_visible, id];
+    sql2 = mysql.format(sql2, inserts2);
     try{
         conn.query(sql1, function (err, result) {
             if (err) throw err;
