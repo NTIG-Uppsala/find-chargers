@@ -326,9 +326,7 @@ app.put('/change-charger-visibility/:id/:is_visible/:email', [
                 if (id_element[1] != null ) return res.send('More than one result. Please contact a admin.');
 
                 if (id_element[0] == null ) return res.send('Email or id is incorrect');
-                console.log(id_element);
-                console.log((is_visible ? 1 : 0));
-                console.log(id_element[0].is_visible);
+
                 if(id_element[0].is_visible == is_visible) return res.send('Visibility already set to ' + is_visible);
 
                 conn.query(sql2, function (err) {
