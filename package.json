@@ -1,0 +1,23 @@
+{
+  "name": "find-chargers",
+  "version": "1.0.0",
+  "description": "This is a repository for an app that finds chargers for electrical cars.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NTIG-Uppsala/find-chargers.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NTIG-Uppsala/find-chargers/issues"
+  },
+  "homepage": "https://github.com/NTIG-Uppsala/find-chargers#readme"
+}

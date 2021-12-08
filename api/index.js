@@ -57,9 +57,9 @@ app.get('/get-chargers-in-range/:lat/:long/:max_distance', [
             });
         }
         //## Variables from params ##//
-        let lat = req.params.lat;
-        let long = req.params.long;
-        let max_distance = req.params.max_distance;
+        const lat = req.params.lat;
+        const long = req.params.long;
+        const max_distance = req.params.max_distance;
 
         //## Try Catch for query errors ##//
         try {
@@ -69,7 +69,6 @@ app.get('/get-chargers-in-range/:lat/:long/:max_distance', [
                 if (error) throw error;
                 //## Check all elements for distance ##//
                 let valid_chargers = result.map(function (element) {
-                    console.log(haversine([element.coordinate_lat, element.coordinate_long], [lat, long]));
                     //## Calculate distance and return if its larger than max_distance and check that the charger should be visible ##//
                     if ((haversine([element.coordinate_lat, element.coordinate_long], [lat, long]) <= max_distance) && element.is_visible) { 
                         return element;
@@ -140,14 +139,17 @@ app.get('/get-charger-by-email/:email', [
 
         const email = req.params.email;
 
-        let sql = `SELECT * FROM charger WHERE id IN (
+        let select_charger_query = `SELECT * FROM charger WHERE id IN (
             SELECT id FROM email WHERE email_address = ?
             );`;
-        sql = mysql.format(sql, email);
+        select_charger_query = mysql.format(select_charger_query, email);
+
+        //## Try Catch for query errors ##//
         try {
-            conn.query(sql, function (err, result) {
+            //## Sending query ##//
+            conn.query(select_charger_query, function (err, result) {
                 if (err) throw err;
-                return res.send(result);
+                return res.send(reinstert_query);
             });
         } catch (err) {
             console.error(err);
@@ -186,10 +188,8 @@ app.post('/post-charger', [
             });
         }
 
-        const {
-            body
-        } = req;
-        let sql1 = `INSERT INTO charger(
+        const {body} = req;
+        let instert_query_charger = `INSERT INTO charger(
                     address, 
                     coordinate_lat, 
                     coordinate_long, 
@@ -201,16 +201,18 @@ app.post('/post-charger', [
                     VALUES
                     (?, ?, ?, ?, ?, ?, ?, ?);`
 
-        var inserts1 = [body.address, body.coordinate_lat, body.coordinate_long, body.ac_1, body.ac_2, body.chademo, body.ccs, body.user_input];
-        sql1 = mysql.format(sql1, inserts1);
+        var inserts = [body.address, body.coordinate_lat, body.coordinate_long, body.ac_1, body.ac_2, body.chademo, body.ccs, body.user_input];
+        instert_query_charger = mysql.format(instert_query_charger, inserts);
 
+        let insert_query_email = mysql.format(`INSERT INTO email (email_address) VALUES (?);`, body.email_address);
 
-        let sql2 = mysql.format(`INSERT INTO email (email_address) VALUES (?);`, body.email_address);
-
+        //## Try Catch for query errors ##//
         try {
-            conn.query(sql1, function (err, result) {
+            //## Sending query ##//
+            conn.query(instert_query_charger, function (err, result) {
                 if (err) throw err;
-                conn.query(sql2, function (err, result) {
+                //## Sending query ##//
+                conn.query(insert_query_email, function (err, result) {
                     if (err) throw err;
                     return res.send(result);
                 });
@@ -255,8 +257,9 @@ app.delete('/delete-charger-by-id/:id/:email', [
 
         let sql1 = mysql.format('SELECT * FROM charger WHERE id IN (SELECT id FROM email WHERE email_address = ?);', email);
         let sql2 = mysql.format(`DELETE FROM charger WHERE id = ?;`, id);
-
+        //## Try Catch for query errors ##//
         try {
+            //## Sending query ##//
             conn.query(sql1, function (err, result) {
                 if (err) throw err;
                 id_exist = result.map(function (element) {
@@ -266,6 +269,7 @@ app.delete('/delete-charger-by-id/:id/:email', [
                 }, this);
 
                 if (id_exist) {
+                    //## Sending query ##//
                     conn.query(sql2, function (err, result) {
                         if (err) throw err;
                         return res.send('Deletion successful');
@@ -311,11 +315,13 @@ app.put('/change-charger-visibility/:id/:is_visible/:email', [
         const is_visible = req.params.is_visible;
         const email = req.params.email
 
-        let sql1 = mysql.format(`SELECT * FROM charger LEFT OUTER JOIN email ON charger.id = email.id WHERE email.email_address = ? AND charger.id = ?;`, [email, id]);
-        let sql2 = mysql.format(`UPDATE charger SET is_visible = ? WHERE id = ?`, [is_visible, id]);
+        let select_query = mysql.format(`SELECT * FROM charger LEFT OUTER JOIN email ON charger.id = email.id WHERE email.email_address = ? AND charger.id = ?;`, [email, id]);
+        let update_query = mysql.format(`UPDATE charger SET is_visible = ? WHERE id = ?`, [is_visible, id]);
 
+        //## Try Catch for query errors ##//
         try {
-            conn.query(sql1, function (err, result) {
+            //## Sending query ##//
+            conn.query(select_query, function (err, result) {
                 if (err) throw err;
                 let id_element = result.map(function (element) {
                     if (element.id == id) {
@@ -329,7 +335,7 @@ app.put('/change-charger-visibility/:id/:is_visible/:email', [
 
                 if(id_element[0].is_visible == is_visible) return res.send('Visibility already set to ' + is_visible);
 
-                conn.query(sql2, function (err) {
+                conn.query(update_query, function (err) {
                     if (err) throw err;
 
                     if (is_visible) return res.send('Charger changed to active');
