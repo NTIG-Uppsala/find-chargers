@@ -60,6 +60,15 @@ def test_delete_charger():
             raise Exception(request_answer)
     pass
 
+# Send non number to chargers in range
+def test_non_number_distance():
+    expected_answer = {"errors": [{"value": "hej\"--","msg": "Must be a number!","param": "max_distance","location": "params"}]}
+    request_answer = requests.get("http://localhost:8080/"+'get-chargers-in-range/31.5/21/hej"--')
+    if request_answer.json() == expected_answer:
+        pass
+    else:
+        raise Exception(request_answer)
+
 # Trys to activet non exsisting charger
 def test_non_existing_charger_active():
     request_answer = requests.put(url=url+"change-charger-visibility/1/1/test@test.com")
@@ -164,16 +173,7 @@ def test_send_hamsterpaj():
 
 # Sends wierd id when changing visibility
 def test_send_wierd_charger_id():
-    expected_answer = {
-                        "errors": [
-                            {
-                            "value": "t\"--",
-                            "msg": "Must be a number!",
-                            "param": "id",
-                            "location": "params"
-                            }
-                        ]
-                        }
+    expected_answer = {"errors": [{"value": "t\"--","msg": "Must be a number!","param": "id","location": "params"}]}
     request_answer = requests.put(url=url+'change-charger-visibility/t"--/1/test@test.com')
     if request_answer.json() == expected_answer:
         pass

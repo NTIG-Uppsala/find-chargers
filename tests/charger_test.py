@@ -18,13 +18,11 @@ def post_request():
     request_answer = requests.post(url+"post-charger", json=data).json()
     return request_answer["insertId"]
     
-#Delete charger and check deletion
-def test_delete_charger():
-    charger_id = post_request()
-    requests.delete(url=url+"delete-charger-by-id/" + str(charger_id) + "/test@test.com")
-    request_answer = requests.get(url=url+"get-charger-by-email/test@test.com").json()
-    for i in range(0, len(request_answer)):
-        if request_answer[i]["id"] == charger_id:     
-            raise Exception(request_answer)
-    pass
-
+# Send non number to chargers in range
+def test_non_number_distance():
+    expected_answer = {"errors": [{"value": "hej\"--","msg": "Must be a number!","param": "max_distance","location": "params"}]}
+    request_answer = requests.get("http://localhost:8080/"+'get-chargers-in-range/31.5/21/hej"--')
+    if request_answer.json() == expected_answer:
+        pass
+    else:
+        raise Exception(request_answer)
