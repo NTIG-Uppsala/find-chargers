@@ -2,7 +2,7 @@ import pytest
 import requests
 import json
 
-url = "http://localhost:8080/"
+url = "https://find-chargers.azurewebsites.net/"
 data = {
     "address": "Testgatan 65",
     "coordinate_lat": 31.5,

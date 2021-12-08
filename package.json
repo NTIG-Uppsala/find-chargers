@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/NTIG-Uppsala/find-chargers/issues"
   },
-  "homepage": "https://github.com/NTIG-Uppsala/find-chargers#readme"
+  "homepage": "https://github.com/NTIG-Uppsala/find-chargers#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0"
+  }
 }

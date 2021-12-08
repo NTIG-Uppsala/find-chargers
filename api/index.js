@@ -4,8 +4,13 @@
 //##### Deps #####//
 const express = require('express');
 const app = express();
+let mysql = require('mysql');
 const { check, body, validationResult } = require('express-validator');
-const haversine = require('haversine-distance')
+const haversine = require('haversine-distance');
+const dotenv = require('dotenv').config()
+
+
+//##### DotEnv Config init #####//
 
 
 //##### Port conf #####//
@@ -13,12 +18,12 @@ const PORT = process.env.PORT || 8080;
 
 
 //##### MySQL config #####//
-let mysql = require('mysql');
+console.log(process.env.DB_HOST);
 let conn = mysql.createConnection({
-    host: 'charger-database.mysql.database.azure.com',
-    user: 'Ntindivid',
-    password: '02_gula_tankar',
-    database: 'findchargers'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE
 });
 
 
