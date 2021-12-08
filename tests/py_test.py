@@ -69,6 +69,25 @@ def test_non_number_distance():
     else:
         raise Exception(request_answer)
 
+# Test wierd data when posting
+def test_wired_data_post():
+    send_data = {
+	"address": "Kamomillgatan 8",
+	"coordinate_lat": "hej hej",
+	"coordinate_long": 17.6820875,
+	"email_address": 4653262,
+	"ac_1": 4143,
+	"chademo": "jeff",
+	"ccs": False,
+	"user_input": 25367
+    }
+    expected_answer = {"errors": [{"value": 4653262,"msg": "Must be a valid email!","param": "email_address","location": "body"},{"value": "hej hej","msg": "Must be a number!","param": "coordinate_lat", "location": "body"}]}
+    request_answer = requests.post(url=url+"post-charger", json=send_data)
+    if request_answer.json() == expected_answer:
+        pass
+    else:
+        raise Exception(request_answer)
+
 # Trys to activet non exsisting charger
 def test_non_existing_charger_active():
     request_answer = requests.put(url=url+"change-charger-visibility/1/1/test@test.com")
