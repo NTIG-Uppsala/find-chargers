@@ -12,6 +12,7 @@
     "calculate-coordinates": "^1.0.8",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
+    "haversine-distance": "^1.2.1",
     "mysql": "^2.18.1"
   },
   "description": ""
