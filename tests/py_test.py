@@ -63,7 +63,7 @@ def test_delete_charger():
 # Send non number to chargers in range
 def test_non_number_distance():
     expected_answer = {"errors": [{"value": "hej\"--","msg": "Must be a number!","param": "max_distance","location": "params"}]}
-    request_answer = requests.get("http://localhost:8080/"+'get-chargers-in-range/31.5/21/hej"--')
+    request_answer = requests.get(url=url+'get-chargers-in-range/31.5/21/hej"--')
     if request_answer.json() == expected_answer:
         pass
     else:
