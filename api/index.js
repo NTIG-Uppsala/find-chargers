@@ -309,40 +309,33 @@ app.put('/change-charger-visibility/:id/:is_visible/:email', [
 
         const id = req.params.id;
         const is_visible = req.params.is_visible;
-        const email = req.params.email;
+        const email = req.params.email
 
-        let visibility_status;
-        let id_exist = false;
-
-        let sql1 = mysql.format(`SELECT * FROM charger WHERE id IN (SELECT id FROM email WHERE email_address = ?);`, email);
+        let sql1 = mysql.format(`SELECT * FROM charger LEFT OUTER JOIN email ON charger.id = email.id WHERE email.email_address = ? AND charger.id = ?;`, [email, id]);
         let sql2 = mysql.format(`UPDATE charger SET is_visible = ? WHERE id = ?`, [is_visible, id]);
 
         try {
             conn.query(sql1, function (err, result) {
                 if (err) throw err;
-                id_exist = result.map(function (element) {
+                let id_element = result.map(function (element) {
                     if (element.id == id) {
-                        visibility_status = element['is_visible'];
-                        return true;
+                        return element;
                     }
-                }, this);
+                }, this).filter(x => x); // https://stackoverflow.com/a/41346932 - Filtrerar ut "", null, undefined och NaN return res.send('Visibility already set to ' + is_visible);
 
-                if (id_exist) {
-                    if (visibility_status != is_visible) {
-                        conn.query(sql2, function (err) {
-                            if (err) throw err;
-                            if (is_visible) {
-                                return res.send('Charger changed to active');
-                            } else {
-                                return res.send('Charger changed to inactive');
-                            }
-                        });
-                    } else {
-                        return res.send('Visibility already set to ' + is_visible);
-                    }
-                } else {
-                    return res.send('Email or id is incorrect');
-                }
+                if (id_element[1] != null ) return res.send('More than one result. Please contact a admin.');
+
+                if (id_element[0] == null ) return res.send('Email or id is incorrect');
+
+                if(id_element[0].is_visible == is_visible) return res.send('Visibility already set to ' + is_visible);
+
+                conn.query(sql2, function (err) {
+                    if (err) throw err;
+
+                    if (is_visible) return res.send('Charger changed to active');
+
+                    return res.send('Charger changed to inactive');
+                });
             });
         } catch (err) {
             console.error(err);
