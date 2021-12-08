@@ -26,6 +26,7 @@ let conn = mysql.createConnection({
 app.listen(PORT, () => console.log(`API started local on port ${PORT}`)); // Sets up listen port.
 app.use(express.json()) //Returns middleware that only parses json and only looks at requests where the Content-Type header matches the type option.
 
+
 /**
  * Gets all chargers in range
  * 
@@ -68,8 +69,9 @@ app.get('/get-chargers-in-range/:lat/:long/:max_distance', [
                 if (error) throw error;
                 //## Check all elements for distance ##//
                 let valid_chargers = result.map(function (element) {
+                    console.log(haversine([element.coordinate_lat, element.coordinate_long], [lat, long]));
                     //## Calculate distance and return if its larger than max_distance and check that the charger should be visible ##//
-                    if ((haversine([element.coordinate_long, element.coordinate_lat], [lat, long]) <= max_distance) && element.is_visible) { 
+                    if ((haversine([element.coordinate_lat, element.coordinate_long], [lat, long]) <= max_distance) && element.is_visible) { 
                         return element;
                     }
                 }, this).filter(x => x); // https://stackoverflow.com/a/41346932 - Filtrerar ut "", null, undefined och NaN
@@ -308,7 +310,7 @@ app.put('/change-charger-visibility/:id/:is_visible/:email', [
         const id = req.params.id;
         const is_visible = req.params.is_visible;
         const email = req.params.email;
-        
+
         let visibility_status;
         let id_exist = false;
 
