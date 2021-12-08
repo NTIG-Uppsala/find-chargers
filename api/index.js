@@ -26,6 +26,25 @@ let conn = mysql.createConnection({
 app.listen(PORT, () => console.log(`API started local on port ${PORT}`)); // Sets up listen port.
 app.use(express.json()) //Returns middleware that only parses json and only looks at requests where the Content-Type header matches the type option.
 
+<<<<<<< HEAD
+=======
+// find all chargers in range of position
+app.get('/get-chargers-in-range/:lat/:long/:max_distance',[
+    check('lat', "Must be a number!").isNumeric(),
+    check('long', "Must be a number!").isNumeric(),
+    check('max_distance', "Must be a number!").isNumeric()
+  ],
+   (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const lat = req.params.lat;
+    const long = req.params.long;
+    const max_distance = req.params.max_distance;
+    const list_to_send = [];
+    let sql = 'SELECT * FROM charger';
+>>>>>>> refs/remotes/origin/main
 
 /**
  * Gets all chargers in range
