@@ -149,7 +149,7 @@ app.get('/get-charger-by-email/:email', [
             //## Sending query ##//
             conn.query(select_charger_query, function (err, result) {
                 if (err) throw err;
-                return res.send(reinstert_query);
+                return res.send(result);
             });
         } catch (err) {
             console.error(err);
