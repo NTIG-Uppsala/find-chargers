@@ -9,16 +9,18 @@ const { check, body, validationResult } = require('express-validator');
 const haversine = require('haversine-distance');
 const dotenv = require('dotenv').config()
 
-
-//##### DotEnv Config init #####//
-
-
 //##### Port conf #####//
 const PORT = process.env.PORT || 8080;
 
 
+//##### DotEnv Sanity Check #####//
+if(process.env.DB_HOST == null) console.error("You have not set the .env file correctly. DB_HOST is missing!")
+if(process.env.DB_USER == null) console.error("You have not set the .env file correctly. DB_USER is missing!")
+if(process.env.DB_PASS == null) console.error("You have not set the .env file correctly. DB_PASS is missing!")
+if(process.env.DB_DATABASE == null) console.error("You have not set the .env file correctly. DB_DATABASE is missing!")
+
+
 //##### MySQL config #####//
-console.log(process.env.DB_HOST);
 let conn = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
