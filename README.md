@@ -1,12 +1,12 @@
 ## Introduction
 This is a repository for an app that finds chargers for electrical cars.
 
-#### [Development environment](documentation/development-environment.md)
+#### [Development environment](https://github.com/NTIG-Uppsala/find-chargers/wiki/Development-Environment)
 
-#### [Definition of done](documentation/definition-of-done.md)
+#### [Definition of done](https://github.com/NTIG-Uppsala/find-chargers/wiki/Definition-of-Done)
 
-#### [Azure documentation](documentation/azure.md)
+#### [Azure documentation](https://github.com/NTIG-Uppsala/find-chargers/wiki/Azure-Setup)
 
-#### [MySQL setup](documentation/MySQL-setup.md)
+#### [MySQL setup](https://github.com/NTIG-Uppsala/find-chargers/wiki/MySQL-setup)
 
-#### [API documentation](documentation/api.md)
+#### [API documentation](https://github.com/NTIG-Uppsala/find-chargers/wiki/API-Docs)
