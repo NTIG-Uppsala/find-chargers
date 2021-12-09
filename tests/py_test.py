@@ -1,6 +1,5 @@
 import pytest
 import requests
-import json
 
 url = "https://find-chargers.azurewebsites.net/"
 data = {
