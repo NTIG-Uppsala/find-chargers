@@ -325,8 +325,8 @@ app.put('/change-charger-visibility/:id/:is_visible/:email', [
         const id = req.params.id;
         const is_visible = req.params.is_visible;
         const email = req.params.email
-
-        let select_query = mysql.format(`SELECT * FROM charger LEFT OUTER JOIN email ON charger.id = email.id WHERE email.email_address = ? AND charger.id = ?;`, [email, id]);
+        
+        let select_query = mysql.format(`SELECT * FROM charger WHERE OwnerID IN (SELECT OwnerID FROM email WHERE email_address = ?) AND id = ?;`, [email, id]);
         let update_query = mysql.format(`UPDATE charger SET is_visible = ? WHERE id = ?`, [is_visible, id]);
 
         //## Try Catch for query errors ##//
