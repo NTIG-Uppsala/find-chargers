@@ -64,8 +64,8 @@ def test_non_number_distance():
     request_answer = requests.get(url=url+'get-chargers-in-range/31.5/21/hej"--')
     assert request_answer.json() == expected_answer
 
-# Test wierd data when posting
-def test_wierd_data_post():
+# Test weird data when posting
+def test_weird_data_post():
     send_data = {
 	"address": "Kamomillgatan 8",
 	"coordinate_lat": "hej hej",
@@ -157,8 +157,8 @@ def test_send_hamsterpaj():
     request_answer = requests.put(url=url+"change-charger-visibility/" + str(charger_id) + "/HAMSTERPAJ/test@test.com")
     assert request_answer.text == "Visibility already set to true"
 
-# Sends wierd id when changing visibility
-def test_send_wierd_charger_id():
+# Sends weird id when changing visibility
+def test_send_weird_charger_id():
     expected_answer = {"errors": [{"value": "t\"--","msg": "Must be a number!","param": "id","location": "params"}]}
     request_answer = requests.put(url=url+'change-charger-visibility/t"--/1/test@test.com')
     assert request_answer.json() == expected_answer
