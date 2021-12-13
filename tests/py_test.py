@@ -29,7 +29,7 @@ def test_check_charger_by_email():
 # Check charger in range
 def test_check_charger_in_range():
     charger_id = post_request()
-    request_answer = requests.get(url=url+"get-chargers-in-range/" + str(data["coordinate_lat"] + 0.00486) + "/" + str(data["coordinate_long"]) + "/" + "10000").json() # Find charger in 1000m range while standing ~500m away
+    request_answer = requests.get(url=url+"get-chargers-in-range/" + str(data["coordinate_lat"] + 0.00486) + "/" + str(data["coordinate_long"]) + "/" + "10000").json() # Find charger in 10000m range while standing ~500m away
     for i in range(0, len(request_answer)):
         if request_answer[i]["id"] == charger_id:     
             return
