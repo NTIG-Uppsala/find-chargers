@@ -105,11 +105,12 @@ app.get('/get-charger', (req, res) => {
     //## Try Catch for query errors ##//
     try {
         //## Sending query ##//
-        conn.query("SELECT * FROM charger LEFT OUTER JOIN email ON charger.id = email.id",
+        conn.query("SELECT * FROM `charger` INNER JOIN email ON charger.ownerID = email.ownerID WHERE 1; ",
             function (err, result) {
                 //## Throw if query error ##//
                 if (err) throw err;
-                //## Return Result ##//
+
+                //## Return Result##//
                 return res.send(result);
             });
     } 
@@ -146,9 +147,7 @@ app.get('/get-charger-by-email/:email', [
 
         const email = req.params.email;
 
-        let select_charger_query = `SELECT * FROM charger WHERE id IN (
-            SELECT id FROM email WHERE email_address = ?
-            );`;
+        let select_charger_query = "SELECT * FROM `charger` INNER JOIN email ON charger.ownerID = email.ownerID WHERE email_address = ?;";
         select_charger_query = mysql.format(select_charger_query, email);
 
         //## Try Catch for query errors ##//
@@ -196,6 +195,13 @@ app.post('/post-charger', [
         }
 
         const {body} = req;
+
+        let find_email_query = `INSERT INTO email (OwnerID,email_address)
+        SELECT * FROM (SELECT NULL AS OwnerID, ? AS email_address) AS temp
+        WHERE NOT EXISTS (
+            SELECT email_address FROM email WHERE email_address = ?
+        );`;
+
         let instert_query_charger = `INSERT INTO charger(
                     address, 
                     coordinate_lat, 
@@ -204,23 +210,26 @@ app.post('/post-charger', [
                     ac_2, 
                     chademo, 
                     ccs, 
-                    user_input) 
+                    user_input,
+                    OwnerID) 
                     VALUES
-                    (?, ?, ?, ?, ?, ?, ?, ?);`
+                    (?, ?, ?, ?, ?, ?, ?, ?, (SELECT OwnerID FROM email WHERE email_address = ?));`
 
-        var inserts = [body.address, body.coordinate_lat, body.coordinate_long, body.ac_1, body.ac_2, body.chademo, body.ccs, body.user_input];
+        find_email_query = mysql.format(find_email_query, [body.email_address,body.email_address]);
+
+        var inserts = [body.address, body.coordinate_lat, body.coordinate_long, body.ac_1, body.ac_2, body.chademo, body.ccs, body.user_input,body.email_address];
         instert_query_charger = mysql.format(instert_query_charger, inserts);
 
-        let insert_query_email = mysql.format(`INSERT INTO email (email_address) VALUES (?);`, body.email_address);
 
         //## Try Catch for query errors ##//
         try {
             //## Sending query ##//
-            conn.query(instert_query_charger, function (err, result) {
+            conn.query(find_email_query, function (err, result) {
                 if (err) throw err;
                 //## Sending query ##//
-                conn.query(insert_query_email, function (err, result) {
+                conn.query(instert_query_charger, function (err, result) {
                     if (err) throw err;
+
                     return res.send(result);
                 });
             });
@@ -262,20 +271,15 @@ app.delete('/delete-charger-by-id/:id/:email', [
 
         let id_exist = false
 
-        let sql1 = mysql.format('SELECT * FROM charger WHERE id IN (SELECT id FROM email WHERE email_address = ?);', email);
+        let sql1 = mysql.format('SELECT * FROM charger WHERE OwnerID IN (SELECT OwnerID FROM email WHERE email_address = ?) AND id = ?;', [email, id]);
         let sql2 = mysql.format(`DELETE FROM charger WHERE id = ?;`, id);
         //## Try Catch for query errors ##//
         try {
             //## Sending query ##//
             conn.query(sql1, function (err, result) {
                 if (err) throw err;
-                id_exist = result.map(function (element) {
-                    if (element.id == id) {
-                        return true;
-                    }
-                }, this);
 
-                if (id_exist) {
+                if (!(result.length == 0)) {
                     //## Sending query ##//
                     conn.query(sql2, function (err, result) {
                         if (err) throw err;
