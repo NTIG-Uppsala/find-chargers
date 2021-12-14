@@ -37,7 +37,9 @@ app.use(express.json()) //Returns middleware that only parses json and only look
 /**
  * Gets all chargers in range
  * 
- * @method GET
+ * @method /get-chargers-in-range/:lat/:long/:max_distance
+ * 
+ * @type {GET} - A GET request is used
  * 
  * @requires {express} - Express is used for http actions.
  * @requires {haversine-distance} - haversine-distance is used to calculate cistance between 2 coordinates.
@@ -93,7 +95,9 @@ app.get('/get-chargers-in-range/:lat/:long/:max_distance', [
 /**
  * Gets all chargers
  * 
- * @method GET
+ * @method /get-charger
+ * 
+ * @type {GET} - A GET request is used
  * 
  * @requires {express} - Express is used for http actions.
  * @requires {mysql} - mysql is used to talk with a mysql database.
@@ -123,7 +127,9 @@ app.get('/get-charger', (req, res) => {
 /**
  * Gets a charger by email specified by user
  * 
- * @method GET
+ * @method /get-charger-by-email/:email
+ * 
+ * @type {GET} - A GET request is used
  * 
  * @requires {express} - Express is used for http actions.
  * @requires {mysql} - mysql is used to talk with a mysql database. 
@@ -165,7 +171,9 @@ app.get('/get-charger-by-email/:email', [
 /**
  * Adds a charger to database using given information
  * 
- * @method POST
+ * @method /post-charger
+ * 
+ * @type {POST} - A GET request is used
  * 
  * @requires {express} - Express is used for http actions.
  * @requires {mysql} - mysql is used to talk with a mysql database.
@@ -243,7 +251,9 @@ app.post('/post-charger', [
 /**
  * Deletes a charger by id with email as verification
  * 
- * @method DELETE
+ * @method /delete-charger-by-id/:id/:email
+ * 
+ * @type {DELETE} - A GET request is used
  * 
  * @requires {express} - Express is used for http actions.
  * @requires {mysql} - mysql is used to talk with a mysql database.
@@ -297,7 +307,9 @@ app.delete('/delete-charger-by-id/:id/:email', [
 /**
  * Updates a chargers visibility
  * 
- * @method PUT
+ * @method /change-charger-visibility/:id/:is_visible/:email
+ * 
+ * @type {PUT} - A GET request is used
  * 
  * @requires {express} - Express is used for http actions.
  * @requires {mysql} - mysql is used to talk with a mysql database.
