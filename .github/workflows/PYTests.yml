@@ -25,9 +25,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      - name: Set up pip Deps
+      - name: Set up pip Deps and run pytest
         run: |
-            apk add --no-cache bash
             pip install --upgrade pip
             pip install pytest
             pip install requests
