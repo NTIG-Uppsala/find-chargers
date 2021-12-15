@@ -25,7 +25,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      - name: GitHub Action for pytest
-        uses: cclauss/GitHub-Action-for-pytest@0.5.0
-        with:
-          args: pytest tests/
+      - name: Set up pip Deps
+        run: |
+            apk add --no-cache bash
+            pip install --upgrade pip
+            pip install pytest
+            pip install requests
+            pytest tests/
