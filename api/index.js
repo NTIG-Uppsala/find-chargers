@@ -73,7 +73,7 @@ app.get('/get-chargers-in-range/:lat/:long/:max_distance', [
         //## Try Catch for query errors ##//
         try {
             //## Sending query ##//
-            conn.query('SELECT * FROM charger', function (error, result) {
+            conn.query('SELECT * FROM `charger` INNER JOIN email ON charger.ownerID = email.ownerID WHERE 1;', function (error, result) {
                 //## Throw if query error ##//
                 if (error) throw error;
                 //## Check all elements for distance ##//
