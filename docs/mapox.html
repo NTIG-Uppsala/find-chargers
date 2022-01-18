@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>charger</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+
+<script src="script.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; z-index: -1 !important;}
+</style>
+</head>
+<body>
+<style>
+    #marker {
+        background-image: url('https://docs.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .mapboxgl-popup {
+        max-width: 200px;
+    }
+
+    .mapboxgl-popup-content {
+			padding: 10px 20px 10px 20px
+	}
+    
+    .closeBtn{
+        position:absolute;
+        width: 50px;
+        height: 50px;
+        float: right;
+        z-index: -10 !important;
+    }
+    .nav{
+        float: right;
+    }
+    .btn-nav{
+        width: 50px;
+        height: 50px;
+    }
+    .sidenav{
+        position: absolute;
+        z-index: -1;
+        width: 20%;
+        height: 100vh;
+        background-color: rgb(160, 160, 160);
+        left: 80VW;
+        display: none;
+        transition: 2s;
+    }
+    .list{
+        position: relative;
+        width: 80%;
+        height: 80vh;
+        margin: 10vh 10%;
+        background-color: rgb(255, 255, 255);
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    .chargers{
+        width: 98%;
+        height: 10%;
+        background-color: gray;
+        border-style: solid;
+        border-width: 1%;
+        border-color: black;
+        text-align: center;
+        font-size: 32px;
+    }
+    .active { 
+    display: block;
+    } 
+
+</style>
+
+<div id="map"></div>
+
+<div class="nav" id="btn-nav" data-open="true">
+    <button class="btn-nav" onclick="closeSideNav()" ></button>
+</div>
+
+<div class="sidenav" id="side-nav">
+    <div class="list">
+        <div class="chargers">
+            <div class="container">
+                <div class="row my-4">
+                  <div class="col">
+                    Col
+                  </div>
+                  <div class="col">
+                    Col
+                  </div>
+                  <div class="col">
+                    <button class="btn-nav" onclick="closeList()" ></button>
+                  </div
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoiam9lbG55bWFyayIsImEiOiJja3dhanhmcWUxMnNhMm9xbWVrczBjbXRrIn0.RkjM1Q1hRCJMJkgNjXNiFg';
+    const monument = [-77.0353, 38.8895];
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/light-v10',
+        center: monument,
+        zoom: 15
+    });
+
+
+
+    // create the popup
+    const popup = new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>TEST</h3><p>TEST</p><p>TEST</p> <button id="1" onclick="closeSideNav()" style="width: 80px;, hight:60px;"id="view-full-information">View Full')
+
+    // create DOM element for the marker
+    const el = document.createElement('div');
+    el.id = 'marker';
+
+    // create the marker
+    new mapboxgl.Marker(el)
+        .setLngLat(monument)
+        .setPopup(popup) // sets a popup on this marker
+        .addTo(map);
+</script>
+
+</body>
+</html>
