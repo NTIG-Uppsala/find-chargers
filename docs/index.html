@@ -9,167 +9,135 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
 
     <script src="script.js"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-            z-index: -1 !important;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <style>
-        #marker {
-            background-image: url('charger-icon.jpg');
-            background-size: cover;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .mapboxgl-popup {
-            max-width: 200px;
-        }
-
-        .mapboxgl-popup-content {
-            padding: 10px 20px 10px 20px
-        }
-
-        .closeBtn {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            float: right;
-            z-index: -10 !important;
-        }
-
-        .nav {
-            float: right;
-        }
-
-        .btn-nav {
-            width: 50px;
-            height: 50px;
-        }
-
-        .sidenav {
-            position: absolute;
-            z-index: -1;
-            width: 20%;
-            height: 100vh;
-            background-color: rgb(160, 160, 160);
-            left: 80VW;
-            display: none;
-        }
-
-        .list {
-            position: relative;
-            width: 80%;
-            height: 80vh;
-            margin: 10vh 10%;
-            background-color: rgb(255, 255, 255);
-            overflow-y: scroll;
-            overflow-x: hidden;
-        }
-
-        .chargers {
-            width: 98%;
-            background-color: gray;
-            border-style: solid;
-            border-width: 1%;
-            border-color: black;
-            text-align: center;
-            font-size: 32px;
-        }
-        .chargerInfo{
-            display: none;
-            background-color: darkgrey;
-            width: 100%;
-
-
-        }
-
-        .active {
-            display: block;
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: auto auto auto;
-        }
-
-        .col {
-            margin: auto;
-        }
-    </style>
-
     <div id="map"></div>
 
     <div class="nav" id="btn-nav" data-open="true">
-        <button class="btn-nav" onclick="closeSideNav()"></button>
+        <button class="btn-nav" onclick="closeSideNav()"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <line x1="4" y1="6" x2="20" y2="6" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="18" x2="20" y2="18" />
+          </svg></button>
     </div>
 
     <div class="sidenav" id="side-nav">
         <div class="list">
+            <!-- Charger 1 -->
             <div class="chargers">
                 <div class="container">
-                    <div class="col">
-                        Location
+                    <div class="col1 chargerInfoText">
+                        UPPSALA CENTRAL STATION
                     </div>
-                    <div class="col">
+                    <div class="col2 chargerInfoText">
                         c-Type
                     </div>
-                    <div class="col">
-                        <button class="btn-nav" id="1" onclick="openChargerInfo(this.id)"></button>
+                    <div class="col3">
+                        <button class="btn-nav" id="1" onclick="openChargerInfo(this.id)"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-equal" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M5 9h14m-14 6h14" />
+                        </svg></button>
                     </div>
                 </div>
                 <div class="chargerInfo" data-open="true">
-                    kasjhdahsd;lj <br><br><br><br><br><br><br><br>918273
+                    UPPSALA CENTRAL STATION <br>
+                    Full address<br>
+                    Charger type<br>
+                    Useable<br>
+                    User info <br>
+                    Cost/hour <br>
                 </div>
             </div>
+            <!-- Charger 1 -->
+            
+            
+            <!-- Charger 2 -->
+            <div class="chargers">
+                <div class="container">
+                    <div class="col1 chargerInfoText">
+                        UPPSALA CASTEL
+                    </div>
+                    <div class="col2 chargerInfoText">
+                        c-Type
+                    </div>
+                    <div class="col3">
+                        <button class="btn-nav" id="2" onclick="openChargerInfo(this.id)"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-equal" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M5 9h14m-14 6h14" />
+                        </svg></button>
+                    </div>
+                </div>
+                <div class="chargerInfo" data-open="true">
+                    UPPSALA CASTEL <br>
+                    Full address<br>
+                    Charger type<br>
+                    Useable<br>
+                    User info <br>
+                    Cost/hour <br>
+                </div>
+            </div>
+            <!-- Charger 2 -->
+
+            <!-- Charger 3 -->
+            <div class="chargers">
+                <div class="container">
+                    <div class="col1 chargerInfoText">
+                        UPPSALA HOSPITAL
+                    </div>
+                    <div class="col2 chargerInfoText">
+                        c-Type
+                    </div>
+                    <div class="col3">
+                        <button class="btn-nav" id="3" onclick="openChargerInfo(this.id)"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-equal" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M5 9h14m-14 6h14" />
+                        </svg></button>
+                    </div>
+                </div>
+                <div class="chargerInfo" data-open="true">
+                    UPPSALA HOSPITAL <br>
+                    Full address<br>
+                    Charger type<br>
+                    Useable<br>
+                    User info <br>
+                    Cost/hour <br>
+                </div>
+            </div>
+            <!-- Charger 3 -->
+
+            <!-- Charger 4 -->
+            <div class="chargers">
+                <div class="container">
+                    <div class="col1 chargerInfoText">
+                        NTI UPPSALA
+                    </div>
+                    <div class="col2 chargerInfoText">
+                        c-Type
+                    </div>
+                    <div class="col3">
+                        <button class="btn-nav" id="4" onclick="openChargerInfo(this.id)"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-equal" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M5 9h14m-14 6h14" />
+                        </svg></button>
+                    </div>
+                </div>
+                <div class="chargerInfo" data-open="true">
+                    NTI UPPSALA <br>
+                    Full address<br>
+                    Charger type<br>
+                    Useable<br>
+                    User info <br>
+                    Cost/hour <br>
+                </div>
+            </div>
+            <!-- Charger 4 -->
+
+
         </div>
     </div>
-
-    <script>
-        mapboxgl.accessToken =
-            'pk.eyJ1Ijoiam9lbG55bWFyayIsImEiOiJja3dhanhmcWUxMnNhMm9xbWVrczBjbXRrIn0.RkjM1Q1hRCJMJkgNjXNiFg';
-        const monument = [17.638900531204673, 59.858564330064056];
-        const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/joelnymark/ckyijeu1i4p1615o8ldlbo1x0',
-            center: monument,
-            zoom: 15
-        });
-
-
-
-        // create the popup
-        const popup = new mapboxgl.Popup({
-            offset: 25
-        }).setHTML(
-            '<h3>TEST</h3><p>TEST</p><p>TEST</p> <button onclick="closeSideNav()" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
-            )
-
-        // create DOM element for the marker
-        const el = document.createElement('div');
-        el.id = 'marker';
-
-        // create the marker
-        new mapboxgl.Marker(el)
-            .setLngLat(monument)
-            .setPopup(popup) // sets a popup on this marker
-            .addTo(map);
-    </script>
-
 </body>
 
 </html>
