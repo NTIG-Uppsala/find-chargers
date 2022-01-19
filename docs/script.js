@@ -17,3 +17,20 @@ function closeSideNav(){
 
     }
 }
+
+
+
+function openChargerInfo(id){
+    let chargerinfo = document.getElementById(id).parentElement.parentElement.nextElementSibling
+
+    if(chargerinfo.getAttribute("data-open") == "true"){
+        chargerinfo.classList.add("active");
+        chargerinfo.setAttribute("data-open","false");
+        
+    }
+    else if(chargerinfo.getAttribute("data-open") == "false"){
+        chargerinfo.classList.remove("active");
+        chargerinfo.setAttribute("data-open","true");
+
+    }
+}
