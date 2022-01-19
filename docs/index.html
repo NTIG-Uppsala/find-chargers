@@ -77,7 +77,15 @@ body { margin: 0; padding: 0; }
     }
     .active { 
     display: block;
+    }   
+    .container{
+        display: grid;
+        grid-template-columns: auto auto auto;
+        margin: 27px 0px;
     } 
+    .col{
+        margin: auto;
+    }
 
 </style>
 
@@ -91,7 +99,6 @@ body { margin: 0; padding: 0; }
     <div class="list">
         <div class="chargers">
             <div class="container">
-                <div class="row my-4">
                   <div class="col">
                     Col
                   </div>
@@ -100,8 +107,7 @@ body { margin: 0; padding: 0; }
                   </div>
                   <div class="col">
                     <button class="btn-nav" onclick="closeList()" ></button>
-                  </div
-                </div>
+                  </div>
               </div>
         </div>
     </div>
