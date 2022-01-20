@@ -1,7 +1,10 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: black;
 }
+
+
 
 #map {
     position: absolute;
@@ -37,21 +40,23 @@ body {
 
 .nav {
     float: right;
-    margin: 2% 2% 0 0;
+    margin: 2.55% 2.55% 0 0;
 }
 
 .btn-nav {
     width: 75px;
     height: 75px;
+    background-color: #CCCCCC;
+    border-radius: 10%;
 }
 
 .sidenav {
     position: absolute;
     z-index: -1;
-    width: 20%;
+    width: 25%;
     height: 100vh;
-    background-color: rgb(160, 160, 160);
-    left: 80VW;
+    background-color: #a0a0a0;
+    left: 75VW;
     display: none;
 }
 
@@ -59,31 +64,38 @@ body {
     position: relative;
     width: 80%;
     height: 80vh;
-    margin: 10vh 10%;
-    background-color: rgb(255, 255, 255);
+    margin: 15vh 10%;
+    background-color: #525252;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
 .chargers {
-    width: 98%;
-    background-color: gray;
-    border-style: solid;
-    border-width: 1%;
-    border-color: black;
+    width: 96%;
+    background-color: #9e9e9e;
+    margin: 1% 1%;
+    padding: 1%;
     text-align: center;
     font-size: 32px;
 }
 .chargerInfo{
     display: none;
-    background-color: darkgrey;
-    width: 100%;
-    font-size: x-large;
+    background-color: #909090;
+    width: 98%;
+    font-size: medium;
     text-align: left;
+    color: rgb(0, 0, 0); 
+    grid-template-columns: 50% 50%;
+    padding: 1%;
+    margin-top: 1%;
 }
 
 .active {
     display: block;
+}
+.active_grid {
+    display: grid;
+    align-items: end;
 }
 
 .container {
@@ -107,4 +119,8 @@ body {
 .chargerInfoText{
     font-size: large;
     text-align: center;
+}
+
+.rotateIcon{
+    transform: rotate(90deg);
 }

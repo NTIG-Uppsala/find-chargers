@@ -18,22 +18,22 @@ window.onload = function() {
     const popup = new mapboxgl.Popup({
     offset: 25
     }).setHTML(
-    '<h3>TEST</h3><p>TEST</p><p>TEST</p> <button onclick="closeSideNav(); openChargerInfo(1);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
+    '<h3>UPPSALA CENTRALSTATIONEN</h3><p>Laddar typ: AC1, AC2</p> <p>Tillgänglig : Ledig!</p> <button onclick="pinInfo(1);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
     )
     const popup1 = new mapboxgl.Popup({
     offset: 25
     }).setHTML(
-    '<h3>TEST</h3><p>TEST</p><p>TEST</p> <button onclick="closeSideNav(); openChargerInfo(2);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
+    '<h3>UPPSALA SLOTT</h3><p>Laddar typ: AC1, AC2</p> <p>Tillgänglig : Ledig!</p> <button onclick="pinInfo(2);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
     )
     const popup2 = new mapboxgl.Popup({
     offset: 25
     }).setHTML(
-    '<h3>TEST</h3><p>TEST</p><p>TEST</p> <button onclick="closeSideNav(); openChargerInfo(3);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
+    '<h3>UPPSALA SJUKHUS</h3><p>Laddar typ: ChaDemo</p> <p>Tillgänglig : UPTAGEN!</p> <button onclick="pinInfo(3);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
     )
     const popup3 = new mapboxgl.Popup({
     offset: 25
     }).setHTML(
-    '<h3>TEST</h3><p>TEST</p><p>TEST</p> <button onclick="closeSideNav(); openChargerInfo(4);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
+    '<h3>NTI UPPSALA</h3><p>Laddar typ: ccs</p> <p>Tillgänglig : ledig!</p> <button onclick="pinInfo(4);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
     )
 
     // create DOM element for the marker
@@ -83,7 +83,7 @@ function closeSideNav(){
 
 
     if(open.getAttribute("data-open") == "true"){
-        document.getElementById("map").style.width = "80%";
+        document.getElementById("map").style.width = "75%";
         navbar.classList.add("active");
         open.setAttribute("data-open","false");
         
@@ -92,7 +92,13 @@ function closeSideNav(){
         document.getElementById("map").style.width = "100%";
         navbar.classList.remove("active");
         open.setAttribute("data-open","true");
-
+        let ledsen = document.getElementsByClassName("chargerInfo");
+        for (let i = 0; i < ledsen.length; i++){
+            if(ledsen[i].getAttribute("data-open") == "false"){
+                ledsen[i].setAttribute("data-open","true");
+                ledsen[i].classList.remove("active_grid");
+            }
+        }
     }
 }
 
@@ -103,14 +109,51 @@ function openChargerInfo(id){
     let chargerinfo = document.getElementById(id).parentElement.parentElement.nextElementSibling
 
     if(chargerinfo.getAttribute("data-open") == "true"){
-        chargerinfo.classList.add("active");
+        chargerinfo.classList.add("active_grid");
         chargerinfo.setAttribute("data-open","false");
         
     }
     else if(chargerinfo.getAttribute("data-open") == "false"){
-        chargerinfo.classList.remove("active");
+        chargerinfo.classList.remove("active_grid");
         chargerinfo.setAttribute("data-open","true");
-
     }
+    rotateIcon(id)
 }
 
+function pinInfo(id){
+    let chargerinfo = document.getElementById(id).parentElement.parentElement.nextElementSibling;
+    if(chargerinfo.getAttribute("data-open") == "true"){
+        chargerinfo.classList.add("active_grid");
+        chargerinfo.setAttribute("data-open","false");
+        
+    }
+    let open = document.getElementById("btn-nav");
+    let navbar = document.getElementById("side-nav")
+
+
+    if(open.getAttribute("data-open") == "true"){
+        document.getElementById("map").style.width = "75%";
+        navbar.classList.add("active");
+        open.setAttribute("data-open","false");
+        
+    }
+    
+    let arrowDirection = document.getElementById(id);
+    if (arrowDirection.getAttribute("data-arrow") == "side"){
+        arrowDirection.firstElementChild.classList.remove("rotateIcon");
+        arrowDirection.setAttribute("data-arrow", "down");
+    }
+    
+}
+
+function rotateIcon(id){
+    let arrowDirection = document.getElementById(id);
+    if (arrowDirection.getAttribute("data-arrow") == "side"){
+        arrowDirection.firstElementChild.classList.remove("rotateIcon");
+        arrowDirection.setAttribute("data-arrow", "down");
+    }
+    else if (arrowDirection.getAttribute("data-arrow") == "down"){
+        arrowDirection.firstElementChild.classList.add("rotateIcon");
+        arrowDirection.setAttribute("data-arrow", "side");
+    }
+}
