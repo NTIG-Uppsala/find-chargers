@@ -18,22 +18,22 @@ window.onload = function() {
     const popup = new mapboxgl.Popup({
     offset: 25
     }).setHTML(
-    '<h3>UPPSALA CENTRALSTATIONEN</h3><p>Laddar typ: AC1, AC2</p> <p>Tillgänglig : Ledig!</p> <button onclick="pinInfo(1);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
+    '<h3>UPPSALA CENTRALSTATION</h3><p>Laddartyp: AC1, AC2</p> <p>Tillgänglig : Ledig!</p> <button onclick="pinInfo(1);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
     )
     const popup1 = new mapboxgl.Popup({
     offset: 25
     }).setHTML(
-    '<h3>UPPSALA SLOTT</h3><p>Laddar typ: AC1, AC2</p> <p>Tillgänglig : Ledig!</p> <button onclick="pinInfo(2);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
+    '<h3>UPPSALA SLOTT</h3><p>Laddartyp: AC2</p> <p>Tillgänglig : Ledig!</p> <button onclick="pinInfo(2);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
     )
     const popup2 = new mapboxgl.Popup({
     offset: 25
     }).setHTML(
-    '<h3>UPPSALA SJUKHUS</h3><p>Laddar typ: ChaDemo</p> <p>Tillgänglig : UPTAGEN!</p> <button onclick="pinInfo(3);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
+    '<h3>UPPSALA SJUKHUS</h3><p>Laddartyp: ChaDemo</p> <p>Tillgänglig : UPTAGEN!</p> <button onclick="pinInfo(3);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
     )
     const popup3 = new mapboxgl.Popup({
     offset: 25
     }).setHTML(
-    '<h3>NTI UPPSALA</h3><p>Laddar typ: ccs</p> <p>Tillgänglig : ledig!</p> <button onclick="pinInfo(4);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
+    '<h3>NTI UPPSALA</h3><p>Laddartyp: AC2</p> <p>Tillgänglig : Ledig!</p> <button onclick="pinInfo(4);" style="width: 80px;, hight:60px;"id="view-full-information">View Full'
     )
 
     // create DOM element for the marker
