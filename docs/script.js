@@ -88,11 +88,13 @@ function closeSideNav(){
     else if(open.getAttribute("data-open") == "false"){
         navbar.classList.remove("active");
         open.setAttribute("data-open","true");
-        let ledsen = document.getElementsByClassName("chargerInfo");
-        for (let i = 0; i < ledsen.length; i++){
-            if(ledsen[i].getAttribute("data-open") == "false"){
-                ledsen[i].setAttribute("data-open","true");
-                ledsen[i].classList.remove("active_grid");
+
+        let chargerList = document.getElementsByClassName("chargerInfo");
+        for (let i = 0; i < chargerList.length; i++){
+            chargerList[i].setAttribute("data-open","true");
+            chargerList[i].classList.remove("active_grid");
+            if (document.getElementById(i + 1).getAttribute("data-arrow") == "down"){
+                rotateIcon(i + 1)
             }
         }
     }
@@ -117,29 +119,8 @@ function openChargerInfo(id){
 }
 
 function pinInfo(id){
-    let chargerinfo = document.getElementById(id).parentElement.parentElement.nextElementSibling;
-    if(chargerinfo.getAttribute("data-open") == "true"){
-        chargerinfo.classList.add("active_grid");
-        chargerinfo.setAttribute("data-open","false");
-        
-    }
-    let open = document.getElementById("btn-nav");
-    let navbar = document.getElementById("side-nav")
-
-
-    if(open.getAttribute("data-open") == "true"){
-        document.getElementById("map").style.width = "75%";
-        navbar.classList.add("active");
-        open.setAttribute("data-open","false");
-        
-    }
-    
-    let arrowDirection = document.getElementById(id);
-    if (arrowDirection.getAttribute("data-arrow") == "side"){
-        arrowDirection.firstElementChild.classList.remove("rotateIcon");
-        arrowDirection.setAttribute("data-arrow", "down");
-    }
-    
+    openChargerInfo(id)
+    closeSideNav()
 }
 
 function rotateIcon(id){
