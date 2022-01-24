@@ -81,13 +81,13 @@ function closeSideNav(){
     let open = document.getElementById("btn-nav");
     let navbar = document.getElementById("side-nav")
 
-    if(open.getAttribute("data-open") == "true"){
+    if(open.getAttribute("data-open") == "false"){
         navbar.classList.add("active");
-        open.setAttribute("data-open","false");
-    }
-    else if(open.getAttribute("data-open") == "false"){
-        navbar.classList.remove("active");
         open.setAttribute("data-open","true");
+    }
+    else if(open.getAttribute("data-open") == "true"){
+        navbar.classList.remove("active");
+        open.setAttribute("data-open","false");
 
         let chargerList = document.getElementsByClassName("chargerInfo");
         for (let i = 0; i < chargerList.length; i++){
@@ -120,7 +120,6 @@ function openChargerInfo(id){
 
 function pinInfo(id){
     openChargerInfo(id)
-    closeSideNav()
 }
 
 function rotateIcon(id){
