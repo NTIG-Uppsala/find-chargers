@@ -9,7 +9,7 @@ window.onload = function() {
     container: 'map',
     style: 'mapbox://styles/joelnymark/ckyijeu1i4p1615o8ldlbo1x0',
     center: pos0,
-    zoom: 14
+    zoom: 13
     });
 
 
