@@ -46,19 +46,20 @@ body {
 .btn-nav {
     width: 75px;
     height: 75px;
-    background-color: #CCCCCC;
+    background-color: #1d1d1d;
     border-radius: 10%;
+    border-color: #308AE9;
 }
 
 .btn-nav:hover {
-    background-color: #bbbbbb;}
+    background-color: #313131;}
 
 .sidenav {
     position: absolute;
     z-index: -1;
     width: 25%;
     height: 100vh;
-    background-color: #a0a0a0;
+    background-color: #525252;
     left: 75VW;
     display: none;
 }
@@ -68,14 +69,14 @@ body {
     width: 80%;
     height: 80vh;
     margin: 15vh 10%;
-    background-color: #525252;
+    background-color: #2a2a2a;
     overflow-y: scroll;
     overflow-x: hidden;
 }
 
 .chargers {
     width: 96%;
-    background-color: #9e9e9e;
+    background-color: #3a3a3a;
     margin: 1% 1%;
     padding: 1%;
     text-align: center;
@@ -83,7 +84,7 @@ body {
 }
 .chargerInfo{
     display: none;
-    background-color: #909090;
+    background-color: #4b4b4b;
     width: 98%;
     font-size: medium;
     text-align: left;
@@ -119,9 +120,17 @@ body {
     grid-area: 1 / 2 / span 2 / 2;
 }
 
-.chargerInfoText{
+.chargerText{
     font-size: large;
+    font-family:'Calibri';
+    color: #E7E7E7;
     text-align: center;
+}
+
+.chargerInfoText{
+    font-size: medium;
+    font-family: 'Calibri';
+    color: #FBF2F2;
 }
 
 .rotateIcon{
