@@ -1,14 +1,14 @@
 window.onload = function() {
     mapboxgl.accessToken =
     'pk.eyJ1Ijoiam9lbG55bWFyayIsImEiOiJja3dhanhmcWUxMnNhMm9xbWVrczBjbXRrIn0.RkjM1Q1hRCJMJkgNjXNiFg';
-    const pos1 = [17.645434131111752, 59.8584748398551];
-    const pos2 = [17.635565820824436, 59.85340378431419]
-    const pos3 = [17.639914575310478, 59.848696472545214]
-    const pos4 = [17.649801703165753, 59.84012790068371]
+    const coordinates1 = [17.645434131111752, 59.8584748398551];
+    const coordinates2 = [17.635565820824436, 59.85340378431419]
+    const coordinates3 = [17.639914575310478, 59.848696472545214]
+    const coordinates4 = [17.649801703165753, 59.84012790068371]
     const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/joelnymark/ckyijeu1i4p1615o8ldlbo1x0',
-    center: pos1,
+    center: coordinates1,
     zoom: 13
     });
 
@@ -37,44 +37,44 @@ window.onload = function() {
     )
 
     // create DOM element for the marker
-    const el1 = document.createElement('div');
-    el1.id = 'marker1';
+    const element1 = document.createElement('div');
+    element1.id = 'marker1';
 
-    const el2 = document.createElement('div');
-    el2.id = 'marker2'
+    const element2 = document.createElement('div');
+    element2.id = 'marker2'
 
-    const el3 = document.createElement('div');
-    el3.id = 'marker3'
+    const element3 = document.createElement('div');
+    element3.id = 'marker3'
 
-    const el4 = document.createElement('div');
-    el4.id = 'marker4'
+    const element4 = document.createElement('div');
+    element4.id = 'marker4'
     
     // create the marker
-    new mapboxgl.Marker(el1)
-    .setLngLat(pos1)
+    new mapboxgl.Marker(element1)
+    .setLngLat(coordinates1)
     .setPopup(popup1) // sets a popup on this marker
     .addTo(map);
     
-    new mapboxgl.Marker(el2)
-    .setLngLat(pos2)
+    new mapboxgl.Marker(element2)
+    .setLngLat(coordinates2)
     .setPopup(popup2) // sets a popup on this marker
     .addTo(map);
 
-    new mapboxgl.Marker(el3)
-    .setLngLat(pos3)
+    new mapboxgl.Marker(element3)
+    .setLngLat(coordinates3)
     .setPopup(popup3) // sets a popup on this marker
     .addTo(map);
 
-    new mapboxgl.Marker(el4)
-    .setLngLat(pos4)
+    new mapboxgl.Marker(element4)
+    .setLngLat(coordinates4)
     .setPopup(popup4) // sets a popup on this marker
     .addTo(map);
     
-    const classthing = "marker"
-    document.getElementById("marker1").classList.add(classthing)
-    document.getElementById("marker2").classList.add(classthing)
-    document.getElementById("marker3").classList.add(classthing)
-    document.getElementById("marker4").classList.add(classthing)
+    const marker_class = "marker"
+    document.getElementById("marker1").classList.add(marker_class)
+    document.getElementById("marker2").classList.add(marker_class)
+    document.getElementById("marker3").classList.add(marker_class)
+    document.getElementById("marker4").classList.add(marker_class)
 }
 
 function closeSideNav(){
