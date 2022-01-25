@@ -119,6 +119,10 @@ function openChargerInfo(id){
 }
 
 function pinInfo(id){
+    if(document.getElementById("btn-nav").getAttribute("data-open") == "false"){
+        document.getElementById("side-nav").classList.add("active");
+        document.getElementById("btn-nav").setAttribute("data-open","true");
+    }
     openChargerInfo(id)
 }
 
