@@ -7,6 +7,15 @@ body {
 
 p {margin: 0px;}
 
+h2 {color: #E7E7E7;
+    font-size: 28pt;
+    font-family: 'Calibri';
+    margin: 0px;
+    position: absolute;
+    top: 5%;
+    left: 10%;
+}
+
 #map {
     position: absolute;
     top: 0;
