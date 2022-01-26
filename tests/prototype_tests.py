@@ -8,7 +8,7 @@ import time
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get("https://www.google.com")
-website ="https://tinyurl.com/Find-Charger"
+website = "file:///C:/Users/jonatan.mone/Projects/find-chargers/docs/index.html"#"https://tinyurl.com/Find-Charger"
 driver.get(website)
 time.sleep(1)
 
@@ -34,8 +34,12 @@ for i in range(0, 2):
         view_full_button = driver.find_element(By.ID, "view-full-information")
         view_full_button.click()
 
-menu_title = driver.find_element(By.ID, "menu_title")
-assert menu_title.text == "Find chargers"
+#Checks that the title is correct.
+try:
+    menu_title = driver.find_element(By.ID, "menu_title")
+    assert menu_title.text == "Find chargers"
+except:
+    print("Title was {}, when it was supposed to be Find chargers".format(menu_title.text))
 
 #Drags the map to check if mapbox functions are active.
 map = driver.find_element(By.ID, "map")
