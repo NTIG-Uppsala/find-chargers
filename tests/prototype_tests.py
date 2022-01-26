@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver import ActionChains
 import time
 
 
@@ -32,5 +33,9 @@ for i in range(0, 2):
         time.sleep(0.25)
         view_full_button = driver.find_element(By.ID, "view-full-information")
         view_full_button.click()
+
+#Drags the map to check if mapbox functions are active.
+map = driver.find_element(By.ID, "map")
+ActionChains(driver).drag_and_drop_by_offset(map, 100, 100).perform()
 
 time.sleep(1)
