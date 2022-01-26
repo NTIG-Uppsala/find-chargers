@@ -34,7 +34,7 @@ for i in range(0, 2):
         view_full_button = driver.find_element(By.ID, "view-full-information")
         view_full_button.click()
 
-menu_title = driver.find_element(By.TAG_NAME, "h2")
+menu_title = driver.find_element(By.ID, "menu_title")
 assert menu_title.text == "Find chargers"
 
 #Drags the map to check if mapbox functions are active.
