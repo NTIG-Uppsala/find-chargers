@@ -1,11 +1,16 @@
+:root {--x1: 4;
+    --x2: 20
+}
+
 body {
     margin: 0;
     padding: 0;
     background-color: black;
 }
 
+p {margin: 0px;
+}
 
-p {margin: 0px;}
 
 #menu_title {color: #E7E7E7;
     font-size: 28pt;
@@ -131,19 +136,39 @@ p {margin: 0px;}
     grid-area: 1 / 2 / span 2 / 2;
 }
 
-.chargerText{
+.chargerText {
     font-size: large;
     font-family:'Calibri';
     color: #E7E7E7;
     text-align: center;
 }
 
-.chargerInfoText{
+.chargerInfoText {
     font-size: medium;
     font-family: 'Calibri';
     color: #FBF2F2;
 }
 
-.rotateIcon{
+.rotateIcon {
     transform: rotate(90deg);
+}
+
+.icon-size {width: 44px;
+    height: 44px}
+
+@media screen and (max-width: 1280px) {
+    .btn-nav {width: 56.25px;
+        height: 56.25px;
+    }
+
+    .collapsibleMenu {margin-right: 3.5%;
+    }
+
+    .icon-size {width: 33px;
+        height: 33px;
+    }
+    
+    #menu_title {font-size: 18pt;
+    top: 5.5%;
+    }
 }
