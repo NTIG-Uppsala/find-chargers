@@ -172,5 +172,18 @@ p {margin: 0px;
     
     #menuTitle {font-size: 18pt;
     top: 5.5%;
+    left: 11%;
     }
+
+    .chargerInfoText {font-size: 9pt;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #fbf2f2dc;
+    border-radius: 20px;
 }

@@ -8,7 +8,7 @@ import sys
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get("https://www.google.com")
-website = "file:///C:/Users/jonatan.mone/Projects/find-chargers/docs/index.html"#"https://tinyurl.com/Find-Charger"
+website = "https://tinyurl.com/Find-Charger"
 driver.get(website)
 
 #Clicks all the arrow buttons.
