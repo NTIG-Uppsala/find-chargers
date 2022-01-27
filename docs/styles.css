@@ -12,7 +12,7 @@ p {margin: 0px;
 }
 
 
-#menu_title {color: #E7E7E7;
+#menuTitle {color: #E7E7E7;
     font-size: 28pt;
     font-family: 'Calibri';
     margin: 0px;
@@ -67,7 +67,8 @@ p {margin: 0px;
 }
 
 .btn-nav:hover {
-    background-color: #313131;}
+    background-color: #313131;
+}
 
 .sidenav {
     position: absolute;
@@ -98,6 +99,7 @@ p {margin: 0px;
     text-align: center;
     font-size: 32px;
 }
+
 .chargerInfo{
     display: none;
     background-color: #4b4b4b;
@@ -168,7 +170,7 @@ p {margin: 0px;
         height: 33px;
     }
     
-    #menu_title {font-size: 18pt;
+    #menuTitle {font-size: 18pt;
     top: 5.5%;
     }
 }
